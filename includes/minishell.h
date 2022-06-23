@@ -3,48 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/06/17 00:54:53 by jubae            ###   ########.fr       */
+/*   Updated: 2022/06/23 22:08:06 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <errno.h>
-# include <string.h>
-# include <termcap.h>
 # include "libft.h"
-# include "ft_printf.h"
-# include "get_next_line.h"
 
-typedef struct s_global	t_global;
+# define TRUE 1
+# define FALSE 0
 
-struct	s_global
+typedef struct s_env
 {
-	int		exit;
-	pid_t	pid;
-	int		signal_on;
-};
+	char	*key;
+	char	*value;
+}	t_env;
 
-void	minishell(char **envp);
+typedef struct s_minishell
+{
+	int				exit_status;
+	int				stdin_fd;
+	int				stdout_fd;
+	int				stderr_fd;
+	t_list			*env_list;
+}	t_minishell;
 
-# define B_RED "\033[1;5;31m"
-# define B_GREEN "\033[1;5;92m"
-# define C_RESET "\e[0m"
+//exit_with_error.c
+void	exit_with_error(char *error_msg, t_minishell *minishell);
 
-# define PATH_MAX 1024
-# define PID_MAX 100000
-# define OFF 0
-# define ON 1
+//print_clib_error.c
+void	print_clib_error(char *file_name, char *func_name);
+
+//free_resources.c
+void	free_resources(t_minishell *minishell);
+
+//init.c
+void	init(int argc, char **argv, char **envp, t_minishell *minishell);
 
 #endif
