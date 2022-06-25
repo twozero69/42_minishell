@@ -6,7 +6,7 @@
 #    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/06/23 22:09:43 by younglee         ###   ########seoul.kr   #
+#    Updated: 2022/06/26 04:37:17 by younglee         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,17 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -g
 SRCS		= srcs/main.c \
 			srcs/utils/exit_with_error.c \
+			srcs/utils/print_minishell_error.c \
 			srcs/utils/free_resources.c \
+			srcs/utils/free_token_list.c \
 			srcs/utils/init.c \
-			srcs/utils/print_clib_error.c
+			srcs/utils/add_new_env.c \
+			srcs/utils/my_close.c \
+			srcs/utils/my_free.c \
+			srcs/utils/my_dup2.c \
+			srcs/lexer/lexer.c \
+			srcs/lexer/check_char.c \
+			srcs/lexer/add_new_token.c
 OBJS		= ${SRCS:.c=.o}
 INC			= -I./includes
 LIBFT		= -L./libft -lft

@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_with_error.c                                  :+:      :+:    :+:   */
+/*   check_char.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/23 04:42:05 by younglee          #+#    #+#             */
-/*   Updated: 2022/06/26 04:10:14 by younglee         ###   ########seoul.kr  */
+/*   Created: 2022/06/26 03:27:06 by younglee          #+#    #+#             */
+/*   Updated: 2022/06/26 04:17:21 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_with_error(char *error_msg, t_shell *shell)
+int	check_char(char c, char *search_str)
 {
-	print_minishell_error(TRUE, NULL, error_msg);
-	free_resources(shell);
-	exit(EXIT_FAILURE);
+	while (*search_str != '\0')
+	{
+		if (*search_str == c)
+			return (TRUE);
+		search_str++;
+	}
+	return (FALSE);
 }

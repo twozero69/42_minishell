@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_with_error.c                                  :+:      :+:    :+:   */
+/*   print_minishell_error.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/23 04:42:05 by younglee          #+#    #+#             */
-/*   Updated: 2022/06/26 04:10:14 by younglee         ###   ########seoul.kr  */
+/*   Created: 2022/06/25 19:34:18 by younglee          #+#    #+#             */
+/*   Updated: 2022/06/26 04:49:24 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_with_error(char *error_msg, t_shell *shell)
+void	print_minishell_error(int shell_name_flag, char *msg1, char *msg2)
 {
-	print_minishell_error(TRUE, NULL, error_msg);
-	free_resources(shell);
-	exit(EXIT_FAILURE);
+	if (shell_name_flag)
+	{
+		ft_putstr_fd("minishell", STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+	if (msg1 != NULL)
+	{
+		ft_putstr_fd(msg1, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+	ft_putendl_fd(msg2, STDERR_FILENO);
 }

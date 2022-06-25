@@ -6,17 +6,37 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/06/23 22:08:06 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/06/26 04:13:53 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+# include <stddef.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <errno.h>
+# include <string.h>
 # include "libft.h"
 
 # define TRUE 1
 # define FALSE 0
+# define SUCCESS 0
+# define FAIL -1
+
+# define META_CHARACTERS " \t\n|&()<>"
+# define OPERATOR_CHARACTERS "|&()<>"
+# define SPACE_CHARACTERS " \t\n"
+# define DOUBLE_CHARACTERS "|<>"
+# define QUOTE_CHARACTERS "'\""
+
+# define EXIT_SYNTEX_ERROR 2
+# define EXIT_
 
 typedef struct s_env
 {
@@ -24,25 +44,83 @@ typedef struct s_env
 	char	*value;
 }	t_env;
 
-typedef struct s_minishell
+enum e_shell
+{
+	SHELL_READLINE,
+	SHELL_LEXER,
+	SHELL_PARSER,
+	SHELL_EXPANDER,
+	SHELL_EXECUTOR
+};
+
+typedef struct s_shell
 {
 	int				exit_status;
 	int				stdin_fd;
 	int				stdout_fd;
 	int				stderr_fd;
 	t_list			*env_list;
-}	t_minishell;
+	enum e_shell	status;
+	char			*line;
+	t_list			*token_list;
+	// t_ast			*ast;
+}	t_shell;
 
-//exit_with_error.c
-void	exit_with_error(char *error_msg, t_minishell *minishell);
+enum e_token
+{
+	TK_WORD,
+	TK_PIPE,
+	TK_AND,
+	TK_OR,
+	TK_INPUT_REDIR,
+	TK_HEREDOC_REDIR,
+	TK_OUTPUT_REDIR,
+	TK_APPEND_REDIR,
+	TK_LEFT_PARENTHESIS,
+	TK_RIGHT_PARENTHESIS,
+	TK_INVALID
+};
 
-//print_clib_error.c
-void	print_clib_error(char *file_name, char *func_name);
+typedef struct s_token
+{
+	enum e_token	type;
+	char			*str;
+}	t_token;
 
-//free_resources.c
-void	free_resources(t_minishell *minishell);
+// utils/exit_with_error.c
+void	exit_with_error(char *error_msg, t_shell *shell);
 
-//init.c
-void	init(int argc, char **argv, char **envp, t_minishell *minishell);
+// utils/print_minishell_error.c
+void	print_minishell_error(int shell_name_flag, char *msg1, char *msg2);
+
+// utils/free_resources.c
+void	free_resources(t_shell *shell);
+
+// utils/free_token_list.c
+void	free_token_list(t_list **token_list);
+
+// utils/init.c
+void	init(int argc, char **argv, char **envp, t_shell *shell);
+
+// utils/add_new_env.c
+int		add_new_env(char *key, char *value, t_shell *shell);
+
+// utils/my_close.c
+void	my_close(int *fd);
+
+// utils/my_free.c
+void	my_free(void **mem);
+
+// utils/my_dup2.c
+void	my_dup2(int old_fd, int new_fd, t_shell *shell);
+
+// lexer/lexer.c
+void	lexer(char *line, t_shell *shell);
+
+// lexer/check_char.c
+int		check_char(char c, char *search_str);
+
+// lexer/add_new_token.c
+int		add_new_token(char *line, int length, enum e_token type, t_shell *sh);
 
 #endif

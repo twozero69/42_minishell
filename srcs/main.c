@@ -6,16 +6,10 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:25:16 by jubae             #+#    #+#             */
-/*   Updated: 2022/06/24 01:50:58 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/06/26 04:48:28 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stddef.h>
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 #include "minishell.h"
 
 static void	readline_sigint_handler(int signo)
@@ -35,34 +29,62 @@ static void	wait_exec_sigint_handler(int signo)
 	ft_putchar_fd('\n', STDERR_FILENO);
 }
 
-static int	my_readline(char **line, const char *prompt)
+static int	my_readline(const char *prompt, t_shell *shell)
 {
 	signal(SIGINT, readline_sigint_handler);
-	*line = readline(prompt);
-	if (*line == NULL)
+	shell->line = readline(prompt);
+	if (shell->line == NULL)
 	{
 		ft_putendl_fd("exit", STDERR_FILENO);
 		return (FALSE);
 	}
 	signal(SIGINT, wait_exec_sigint_handler);
+	shell->status = SHELL_LEXER;
 	return (TRUE);
+}
+
+static void	reset_resources(t_shell *shell)
+{
+	my_dup2(shell->stdin_fd, STDIN_FILENO, shell);
+	my_dup2(shell->stdout_fd, STDOUT_FILENO, shell);
+	my_dup2(shell->stderr_fd, STDERR_FILENO, shell);
+	my_free((void **)&shell->line);
+	free_token_list(&shell->token_list);
+}
+
+static void	print_token_list(void *content)
+{
+	t_token	*token;
+
+	token = (t_token *)content;
+	printf("type:%d | str:%s\n", token->type, token->str);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_minishell	minishell;
-	char		*line;
+	t_shell	shell;
 
-	init(argc, argv, envp, &minishell);
-	while (my_readline(&line, "$> "))
+	init(argc, argv, envp, &shell);
+	while (shell.status == SHELL_READLINE && my_readline("$> ", &shell))
 	{
-		// lexer();
-		// parser();
-		// expander();
-		// executor();
-		add_history(line);
-		free(line);
+		if (*shell.line != '\0')
+			add_history(shell.line);
+		if (shell.status == SHELL_LEXER && shell.line != NULL)
+			lexer(shell.line, &shell);
+
+		/* lexer test start*/
+		ft_lstiter(shell.token_list, print_token_list);
+		shell.status = SHELL_READLINE;
+		/* lexer test end*/
+
+		// if (shell.status == SHELL_PARSER && shell.token_list != NULL)
+		// 	parser();
+		// if (shell.status == SHELL_EXPANDER)
+		// 	expander();
+		// if (shell.status == SHELL_EXECUTOR)
+		// 	executor();
+		reset_resources(&shell);
 	}
-	free_resources(&minishell);
+	free_resources(&shell);
 	return (EXIT_SUCCESS);
 }
