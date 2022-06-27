@@ -6,7 +6,7 @@
 #    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/06/26 04:37:17 by younglee         ###   ########seoul.kr   #
+#    Updated: 2022/06/28 01:57:42 by younglee         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,13 @@ SRCS		= srcs/main.c \
 			srcs/utils/my_dup2.c \
 			srcs/lexer/lexer.c \
 			srcs/lexer/check_char.c \
-			srcs/lexer/add_new_token.c
+			srcs/lexer/add_new_token.c \
+			srcs/parser/parser.c \
+			srcs/parser/check_syntax.c \
+			srcs/parser/print_syntax_error.c \
+			srcs/parser/check_front_and_back_tokens.c \
+			srcs/parser/check_operator.c \
+			srcs/parser/check_redir.c
 OBJS		= ${SRCS:.c=.o}
 INC			= -I./includes
 LIBFT		= -L./libft -lft

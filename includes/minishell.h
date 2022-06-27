@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/06/26 04:13:53 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/06/28 01:52:49 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,23 @@ int		check_char(char c, char *search_str);
 
 // lexer/add_new_token.c
 int		add_new_token(char *line, int length, enum e_token type, t_shell *sh);
+
+// parser/parser.c
+void	parser(t_shell *shell);
+
+// parser/check_syntax.c
+int		check_syntax(t_list *token_list);
+
+// parser/print_syntax_error.c
+void	print_syntax_error(char *token_str);
+
+// parser/check_front_and_back_tokens.c
+int		check_front_and_back_tokens(t_list *curr);
+
+// parser/check_operator.c
+int		check_operator(enum e_token type);
+
+// parser/check_redir.c
+int		check_redir(enum e_token type);
 
 #endif

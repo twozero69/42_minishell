@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:25:16 by jubae             #+#    #+#             */
-/*   Updated: 2022/06/26 04:48:28 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/06/28 02:01:42 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,6 @@ static void	reset_resources(t_shell *shell)
 	free_token_list(&shell->token_list);
 }
 
-static void	print_token_list(void *content)
-{
-	t_token	*token;
-
-	token = (t_token *)content;
-	printf("type:%d | str:%s\n", token->type, token->str);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
@@ -71,14 +63,12 @@ int	main(int argc, char **argv, char **envp)
 			add_history(shell.line);
 		if (shell.status == SHELL_LEXER && shell.line != NULL)
 			lexer(shell.line, &shell);
+		if (shell.status == SHELL_PARSER && shell.token_list != NULL)
+			parser(&shell);
 
-		/* lexer test start*/
-		ft_lstiter(shell.token_list, print_token_list);
+		//syntax check test
 		shell.status = SHELL_READLINE;
-		/* lexer test end*/
 
-		// if (shell.status == SHELL_PARSER && shell.token_list != NULL)
-		// 	parser();
 		// if (shell.status == SHELL_EXPANDER)
 		// 	expander();
 		// if (shell.status == SHELL_EXECUTOR)
