@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/06/28 01:52:49 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/06/28 10:32:33 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,42 @@
 # define EXIT_SYNTEX_ERROR 2
 # define EXIT_
 
+enum e_token
+{
+	TK_WORD,
+	TK_PIPE,
+	TK_AND,
+	TK_OR,
+	TK_INPUT_REDIR,
+	TK_HEREDOC_REDIR,
+	TK_OUTPUT_REDIR,
+	TK_APPEND_REDIR,
+	TK_LEFT_PARENTHESIS,
+	TK_RIGHT_PARENTHESIS,
+	TK_INVALID
+};
+
+typedef struct s_token
+{
+	enum e_token	type;
+	char			*str;
+}	t_token;
+
+enum e_ast_node
+{
+	NODE_NONTERMINAL,
+	NODE_TERMINAL,
+	NODE_INVALID
+};
+
+typedef struct s_ast_node
+{
+	enum e_ast_node		type;
+	struct s_ast_node	*left_child;
+	struct s_ast_node	*right_child;
+	t_list				*token_list;
+}	t_ast_node;
+
 typedef struct s_env
 {
 	char	*key;
@@ -63,29 +99,8 @@ typedef struct s_shell
 	enum e_shell	status;
 	char			*line;
 	t_list			*token_list;
-	// t_ast			*ast;
+	t_ast_node		*ast;
 }	t_shell;
-
-enum e_token
-{
-	TK_WORD,
-	TK_PIPE,
-	TK_AND,
-	TK_OR,
-	TK_INPUT_REDIR,
-	TK_HEREDOC_REDIR,
-	TK_OUTPUT_REDIR,
-	TK_APPEND_REDIR,
-	TK_LEFT_PARENTHESIS,
-	TK_RIGHT_PARENTHESIS,
-	TK_INVALID
-};
-
-typedef struct s_token
-{
-	enum e_token	type;
-	char			*str;
-}	t_token;
 
 // utils/exit_with_error.c
 void	exit_with_error(char *error_msg, t_shell *shell);
