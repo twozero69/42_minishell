@@ -6,15 +6,13 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/06/28 10:32:33 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/06/28 19:59:09 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <signal.h>
 # include <stddef.h>
 # include <unistd.h>
@@ -22,6 +20,8 @@
 # include <stdio.h>
 # include <errno.h>
 # include <string.h>
+# include "readline/readline.h"
+# include "readline/history.h"
 # include "libft.h"
 
 # define TRUE 1

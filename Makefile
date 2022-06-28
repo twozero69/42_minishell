@@ -6,7 +6,7 @@
 #    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/06/28 19:03:06 by younglee         ###   ########seoul.kr   #
+#    Updated: 2022/06/28 19:59:12 by younglee         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ LIBFT_LIB		= libft/libft.a
 LIBFT_DIR		= libft
 RM				= @rm -f
 READLINE		= -L./readline -lreadline -lhistory -lncurses
-READLINE_INC	= -I./readline
+READLINE_INC	= -I./
 READLINE_LIB	= readline/libreadline.a
 READLINE_DIR	= readline
 
