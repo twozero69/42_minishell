@@ -6,7 +6,7 @@
 #    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/06/28 15:24:37 by younglee         ###   ########seoul.kr   #
+#    Updated: 2022/06/28 18:33:36 by younglee         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,21 +39,16 @@ LIBFT_INC		= -I./libft
 LIBFT_LIB		= libft/libft.a
 LIBFT_DIR		= libft
 RM				= @rm -f
-
-KERNEL			:= ${shell uname -s}
-ifeq (${KERNEL}, Darwin)
-	READLINE		= -lreadline -L/opt/homebrew/opt/readline/lib
-	READLINE_INC	= -I/opt/homebrew/opt/readline/include
-endif
-ifeq (${KERNEL}, Linux)
-	READLINE		= -lreadline
-endif
+READLINE		= -L./readline -lreadline -lhistory -lncurses
+READLINE_INC	= -I./readline
+READLINE_LIB	= readline/libreadline.a
+READLINE_DIR	= readline
 
 
 .c.o:
 				${CC} ${CFLAGS} ${INC} ${LIBFT_INC} ${READLINE_INC} -c $< -o ${<:.c=.o}
 
-${NAME}:		${OBJS} ${LIBFT_LIB}
+${NAME}:		${OBJS} ${LIBFT_LIB} ${READLINE_LIB}
 				${CC} ${CFLAGS} -o ${NAME} ${OBJS} ${LIBFT} ${READLINE}
 
 all:			${NAME}
@@ -61,12 +56,17 @@ all:			${NAME}
 ${LIBFT_LIB}:
 				@make bonus -C ${LIBFT_DIR}
 
+${READLINE_LIB}:
+				@cd $(READLINE_DIR); ./configure
+				@make -C ${READLINE_DIR}
+
 clean:
 				${RM} ${OBJS}
 				@make clean -C ${LIBFT_DIR}
 
 fclean:			clean
 				${RM} ${NAME} ${LIBFT_LIB}
+				@make clean -C ${READLINE_DIR}
 
 re:
 				@make fclean

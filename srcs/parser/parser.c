@@ -6,17 +6,11 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 22:29:39 by younglee          #+#    #+#             */
-/*   Updated: 2022/06/28 15:02:50 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/06/28 18:32:18 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static int	make_ast(t_shell *shell)
-// {
-
-// 	return (SUCCESS);
-// }
 
 void	parser(t_shell *shell)
 {
