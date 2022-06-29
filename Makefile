@@ -6,7 +6,7 @@
 #    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/06/28 19:59:12 by younglee         ###   ########seoul.kr   #
+#    Updated: 2022/06/30 05:31:41 by younglee         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRCS			= srcs/main.c \
 				srcs/utils/print_minishell_error.c \
 				srcs/utils/free_resources.c \
 				srcs/utils/free_token_list.c \
+				srcs/utils/free_ast.c \
 				srcs/utils/init.c \
 				srcs/utils/add_new_env.c \
 				srcs/utils/my_close.c \
@@ -31,7 +32,15 @@ SRCS			= srcs/main.c \
 				srcs/parser/print_syntax_error.c \
 				srcs/parser/check_front_and_back_tokens.c \
 				srcs/parser/check_operator.c \
-				srcs/parser/check_redir.c
+				srcs/parser/check_redir.c \
+				srcs/parser/find_control_operator.c \
+				srcs/parser/find_redir_operator.c \
+				srcs/parser/get_right_parenthesis.c \
+				srcs/parser/make_ast_node.c \
+				srcs/parser/make_child_node.c \
+				srcs/parser/make_control_node.c \
+				srcs/parser/make_redir_node.c \
+				srcs/parser/make_cmd_node.c
 OBJS			= ${SRCS:.c=.o}
 INC				= -I./includes
 LIBFT			= -L./libft -lft

@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 17:46:31 by younglee          #+#    #+#             */
-/*   Updated: 2022/06/26 04:15:06 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/06/29 11:03:29 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	add_new_token_two(t_token *tk, char *line, int length, t_shell *sh)
 	if (tk->str == NULL)
 		return (FAIL);
 	ft_strlcpy(tk->str, line, length + 1);
-	if (add_new_token_three(tk, sh))
+	if (add_new_token_three(tk, sh) == FAIL)
 	{
 		my_free((void **)&tk->str);
 		return (FAIL);

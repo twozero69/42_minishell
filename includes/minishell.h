@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/06/28 19:59:09 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/06/30 05:02:22 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define META_CHARACTERS " \t\n|&()<>"
 # define OPERATOR_CHARACTERS "|&()<>"
 # define SPACE_CHARACTERS " \t\n"
-# define DOUBLE_CHARACTERS "|<>"
+# define DOUBLE_CHARACTERS "|&<>"
 # define QUOTE_CHARACTERS "'\""
 
 # define EXIT_SYNTEX_ERROR 2
@@ -40,6 +40,7 @@
 
 enum e_token
 {
+	TK_INVALID,
 	TK_WORD,
 	TK_PIPE,
 	TK_AND,
@@ -50,7 +51,7 @@ enum e_token
 	TK_APPEND_REDIR,
 	TK_LEFT_PARENTHESIS,
 	TK_RIGHT_PARENTHESIS,
-	TK_INVALID
+	TK_PARSER_VISIT
 };
 
 typedef struct s_token
@@ -59,20 +60,27 @@ typedef struct s_token
 	char			*str;
 }	t_token;
 
-enum e_ast_node
+enum e_ast
 {
-	NODE_NONTERMINAL,
-	NODE_TERMINAL,
-	NODE_INVALID
+	NODE_INVALID,
+	NODE_CMD,
+	NODE_PIPE,
+	NODE_AND,
+	NODE_OR,
+	NODE_INPUT_REDIR,
+	NODE_HEREDOC_REDIR,
+	NODE_OUTPUT_REDIR,
+	NODE_APPEND_REDIR,
+	NODE_REDIR_FILE
 };
 
-typedef struct s_ast_node
+typedef struct s_ast
 {
-	enum e_ast_node		type;
-	struct s_ast_node	*left_child;
-	struct s_ast_node	*right_child;
-	t_list				*token_list;
-}	t_ast_node;
+	enum e_ast		type;
+	struct s_ast	*left_child;
+	struct s_ast	*right_child;
+	char			**argv;
+}	t_ast;
 
 typedef struct s_env
 {
@@ -99,7 +107,7 @@ typedef struct s_shell
 	enum e_shell	status;
 	char			*line;
 	t_list			*token_list;
-	t_ast_node		*ast;
+	t_ast			*ast;
 }	t_shell;
 
 // utils/exit_with_error.c
@@ -113,6 +121,9 @@ void	free_resources(t_shell *shell);
 
 // utils/free_token_list.c
 void	free_token_list(t_list **token_list);
+
+// utils/free_ast.c
+void	free_ast(t_ast **ast);
 
 // utils/init.c
 void	init(int argc, char **argv, char **envp, t_shell *shell);
@@ -155,5 +166,29 @@ int		check_operator(enum e_token type);
 
 // parser/check_redir.c
 int		check_redir(enum e_token type);
+
+// parser/find_control_operator.c
+int		find_control_operator(t_list *tk_list, t_list **junc, enum e_ast *type);
+
+// parser/find_redir_operator.c
+int		find_redir_operator(t_list *tk_list, t_list **junc, enum e_ast *type);
+
+// parser/get_right_parenthesis.c
+t_list	*get_right_parenthesis(t_list *token_list);
+
+// parser/make_ast_node.c
+int		make_ast_node(t_list *token_list, t_ast *node);
+
+// parser/make_child_node.c
+int		make_child_node(t_ast *node);
+
+// parser/make_control_node.c
+int		make_control_node(t_list *l_list, t_list *r_list, t_ast *node);
+
+// parser/make_redir_node.c
+int		make_redir_node(t_list *l_list, t_list *r_list, t_ast *node);
+
+// parser/make_cmd_node.c
+int		make_cmd_node(t_list *token_list, t_ast *node);
 
 #endif

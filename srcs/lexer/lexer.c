@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 16:37:09 by younglee          #+#    #+#             */
-/*   Updated: 2022/06/28 00:09:52 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/06/29 10:15:39 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	get_operator_length(char *token_str)
 	return (1);
 }
 
-static enum e_token	get_operator_type(char c, int length, t_shell *shell)
+static enum e_token	get_operator_type(char c, int length)
 {
 	if (c == '|' && length == 1)
 		return (TK_PIPE);
@@ -42,11 +42,10 @@ static enum e_token	get_operator_type(char c, int length, t_shell *shell)
 	if (c == ')' && length == 1)
 		return (TK_RIGHT_PARENTHESIS);
 	print_minishell_error(TRUE, "syntex error", "invalid token");
-	shell->exit_status = EXIT_SYNTEX_ERROR;
 	return (TK_INVALID);
 }
 
-static int	get_word_length(char *token_str, t_shell *shell)
+static int	get_word_length(char *token_str)
 {
 	char	*token_str_start;
 	char	*closing_quote;
@@ -62,7 +61,6 @@ static int	get_word_length(char *token_str, t_shell *shell)
 			if (closing_quote == NULL)
 			{
 				print_minishell_error(TRUE, "syntex error", "unclosed quote");
-				shell->exit_status = EXIT_SYNTEX_ERROR;
 				return (FAIL);
 			}
 			token_str = closing_quote + 1;
@@ -73,18 +71,18 @@ static int	get_word_length(char *token_str, t_shell *shell)
 	return (token_str - token_str_start);
 }
 
-int	get_token_info(char *line, int *length, enum e_token *type, t_shell *shell)
+int	get_token_info(char *line, int *length, enum e_token *type)
 {
 	if (check_char(*line, OPERATOR_CHARACTERS))
 	{
 		*length = get_operator_length(line);
-		*type = get_operator_type(*line, *length, shell);
+		*type = get_operator_type(*line, *length);
 		if (*type == TK_INVALID)
 			return (FAIL);
 	}
 	else
 	{
-		*length = get_word_length(line, shell);
+		*length = get_word_length(line);
 		if (*length == FAIL)
 			return (FAIL);
 		*type = TK_WORD;
@@ -103,8 +101,11 @@ void	lexer(char *line, t_shell *shell)
 			line++;
 		if (*line != '\0')
 		{
-			if (get_token_info(line, &token_length, &token_type, shell) == FAIL)
+			if (get_token_info(line, &token_length, &token_type) == FAIL)
+			{
+				shell->exit_status = EXIT_SYNTEX_ERROR;
 				return ;
+			}
 			if (add_new_token(line, token_length, token_type, shell) == FAIL)
 				exit_with_error("lexer.c: malloc failed", shell);
 			line += token_length;

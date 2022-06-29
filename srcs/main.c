@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:25:16 by jubae             #+#    #+#             */
-/*   Updated: 2022/06/28 20:09:49 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/06/30 05:30:15 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,29 @@ static void	reset_resources(t_shell *shell)
 	my_dup2(shell->stderr_fd, STDERR_FILENO, shell);
 	my_free((void **)&shell->line);
 	free_token_list(&shell->token_list);
+	free_ast(&shell->ast);
+}
+
+void	print_argv(char **argv)
+{
+	printf("| argv: ");
+	while (*argv != NULL)
+	{
+		printf("%s ", *argv);
+		argv++;
+	}
+}
+
+void	print_ast(t_ast *node, int depth)
+{
+	printf("depth: %d | type: %d ", depth, node->type);
+	if (node->argv != NULL)
+		print_argv(node->argv);
+	printf("\n");
+	if (node->left_child != NULL)
+		print_ast(node->left_child, depth + 1);
+	if (node->right_child != NULL)
+		print_ast(node->right_child, depth + 1);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -68,7 +91,9 @@ int	main(int argc, char **argv, char **envp)
 		if (shell.status == SHELL_PARSER && shell.token_list != NULL)
 			parser(&shell);
 
-		//syntax check test
+		//parser test
+		if (shell.ast != NULL)
+			print_ast(shell.ast, 0);
 		shell.status = SHELL_READLINE;
 
 		// if (shell.status == SHELL_EXPANDER)
