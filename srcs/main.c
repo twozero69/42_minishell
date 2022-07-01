@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:25:16 by jubae             #+#    #+#             */
-/*   Updated: 2022/06/30 05:30:15 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/02 03:14:14 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,10 @@ int	main(int argc, char **argv, char **envp)
 		//parser test
 		if (shell.ast != NULL)
 			print_ast(shell.ast, 0);
+
+		//built in exit test
+		builtin_exit(shell.ast->argv, &shell);
+
 		shell.status = SHELL_READLINE;
 
 		// if (shell.status == SHELL_EXPANDER)

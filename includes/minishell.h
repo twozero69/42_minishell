@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/06/30 05:02:22 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/02 03:30:39 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,18 @@
 # define DOUBLE_CHARACTERS "|&<>"
 # define QUOTE_CHARACTERS "'\""
 
+// parser exit status
 # define EXIT_SYNTEX_ERROR 2
-# define EXIT_
+
+// builtin exit status
+# ifdef __linux__
+#  define EXIT_TOO_MANY_ARGUMENTS 1
+#  define EXIT_NOT_NUMERIC_ARGUMENTS 2
+# endif
+# ifdef __APPLE__
+#  define EXIT_TOO_MANY_ARGUMENTS 1
+#  define EXIT_NOT_NUMERIC_ARGUMENTS 255
+# endif
 
 enum e_token
 {
@@ -190,5 +200,14 @@ int		make_redir_node(t_list *l_list, t_list *r_list, t_ast *node);
 
 // parser/make_cmd_node.c
 int		make_cmd_node(t_list *token_list, t_ast *node);
+
+// builtin/builtin_exit.c
+void	builtin_exit(char **argv, t_shell *shell);
+
+// builtin/builtin_exit_utils.c
+long	my_atoi(const char *arg);
+void	exit_without_error(int exit_status);
+int		return_false_with_numeric_error(char *arg, t_shell *shell);
+int		return_false_with_too_many_error(t_shell *shell);
 
 #endif
