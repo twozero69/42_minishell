@@ -6,7 +6,7 @@
 #    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/07/02 02:24:03 by younglee         ###   ########seoul.kr   #
+#    Updated: 2022/07/02 18:54:29 by younglee         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,8 @@ SRCS			= srcs/main.c \
 				srcs/parser/make_redir_node.c \
 				srcs/parser/make_cmd_node.c \
 				srcs/builtin/builtin_exit.c \
-				srcs/builtin/builtin_exit_utils.c
+				srcs/builtin/builtin_exit_utils.c \
+				srcs/builtin/builtin_echo.c
 OBJS			= ${SRCS:.c=.o}
 INC				= -I./includes
 LIBFT			= -L./libft -lft

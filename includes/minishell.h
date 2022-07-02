@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/02 03:30:39 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/02 20:16:38 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdio.h>
 # include <errno.h>
 # include <string.h>
+# include <term.h>
 # include "readline/readline.h"
 # include "readline/history.h"
 # include "libft.h"
@@ -206,8 +207,11 @@ void	builtin_exit(char **argv, t_shell *shell);
 
 // builtin/builtin_exit_utils.c
 long	my_atoi(const char *arg);
-void	exit_without_error(int exit_status);
+void	exit_without_error(int exit_status, t_shell *shell);
 int		return_false_with_numeric_error(char *arg, t_shell *shell);
 int		return_false_with_too_many_error(t_shell *shell);
+
+// builtin/builtin_echo.c
+void	builtin_echo(char **argv, t_shell *shell);
 
 #endif
