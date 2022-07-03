@@ -6,7 +6,7 @@
 #    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/07/02 18:54:29 by younglee         ###   ########seoul.kr   #
+#    Updated: 2022/07/03 16:21:28 by younglee         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME			= minishell
 CC				= cc
 CFLAGS			= -Wall -Wextra -Werror -g
 SRCS			= srcs/main.c \
-				srcs/utils/exit_with_error.c \
+				srcs/utils/exit_with_custom_error.c \
+				srcs/utils/exit_with_clib_error.c \
 				srcs/utils/print_minishell_error.c \
 				srcs/utils/free_resources.c \
 				srcs/utils/free_token_list.c \
@@ -43,7 +44,8 @@ SRCS			= srcs/main.c \
 				srcs/parser/make_cmd_node.c \
 				srcs/builtin/builtin_exit.c \
 				srcs/builtin/builtin_exit_utils.c \
-				srcs/builtin/builtin_echo.c
+				srcs/builtin/builtin_echo.c \
+				srcs/builtin/builtin_pwd.c
 OBJS			= ${SRCS:.c=.o}
 INC				= -I./includes
 LIBFT			= -L./libft -lft

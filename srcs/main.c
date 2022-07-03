@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:25:16 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/02 21:02:26 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/03 16:40:28 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static int	my_readline(const char *prompt, t_shell *shell)
 	{
 		// ft_putstr_fd("\x1b[1A", STDERR_FILENO); // maybe not necessary
 		// ft_putstr_fd("\033[3C", STDERR_FILENO);
-		ft_putendl_fd("exit", STDERR_FILENO);
+		if (isatty(STDERR_FILENO))
+			ft_putendl_fd("exit", STDERR_FILENO);
 		return (FALSE);
 	}
 	signal(SIGINT, wait_exec_sigint_handler);

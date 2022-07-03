@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 22:29:39 by younglee          #+#    #+#             */
-/*   Updated: 2022/06/30 01:58:19 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/03 16:14:58 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	parser(t_shell *shell)
 		return ;
 	}
 	if (make_ast(shell) == FAIL)
-		exit_with_error("parser.c: malloc failed", shell);
+		exit_with_clib_error("parser.c: malloc", shell);
 	free_token_list(&shell->token_list);
 	shell->status = SHELL_EXPANDER;
 }

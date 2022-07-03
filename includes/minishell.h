@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/02 20:16:38 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/03 16:13:49 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,11 @@ typedef struct s_shell
 	t_ast			*ast;
 }	t_shell;
 
-// utils/exit_with_error.c
-void	exit_with_error(char *error_msg, t_shell *shell);
+// utils/exit_with_custom_error.c
+void	exit_with_custom_error(char *error_msg, t_shell *shell);
+
+// utils/exit_with_clib_error.c
+void	exit_with_clib_error(char *error_msg, t_shell *shell);
 
 // utils/print_minishell_error.c
 void	print_minishell_error(int shell_name_flag, char *msg1, char *msg2);
@@ -213,5 +216,8 @@ int		return_false_with_too_many_error(t_shell *shell);
 
 // builtin/builtin_echo.c
 void	builtin_echo(char **argv, t_shell *shell);
+
+// builtin/builtin_pwd.c
+void	builtin_pwd(t_shell *shell);
 
 #endif
