@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/04 23:27:08 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/05 05:39:59 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,6 @@ void	builtin_export(char **argv, t_shell *shell);
 int		print_export_list(t_shell *shell);
 
 // builtin/builtin_export_utils2.c
-int		add_argv_to_envp(char **argv, t_shell *shell);
+int		add_arg_to_envp(char *arg, t_shell *shell);
 
 #endif

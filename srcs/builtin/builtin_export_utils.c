@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:20:43 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/04 23:28:05 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/05 05:10:04 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,15 @@ static void	print_env(t_env *env)
 {
 	char	*value;
 
-	ft_putstr_fd("declare -x ", STDOUT_FILENO);
-	ft_putendl_fd(env->key, STDOUT_FILENO);
-	if (env->value == NULL)
+	if (ft_strncmp(env->key, "_", 2) == 0)
 		return ;
+	ft_putstr_fd("declare -x ", STDOUT_FILENO);
+	if (env->value == NULL)
+	{
+		ft_putendl_fd(env->key, STDOUT_FILENO);
+		return ;
+	}
+	ft_putstr_fd(env->key, STDOUT_FILENO);
 	ft_putstr_fd("=\"", STDOUT_FILENO);
 	value = env->value;
 	while (*value != '\0')
@@ -91,14 +96,17 @@ static void	print_env(t_env *env)
 int	print_export_list(t_shell *shell)
 {
 	t_env	**sorted_array;
+	t_env	**sorted_array_head;
 
 	sorted_array = get_sorted_array(shell->env_list);
 	if (sorted_array == NULL)
 		return (FAIL);
+	sorted_array_head = sorted_array;
 	while (*sorted_array != NULL)
 	{
 		print_env(*sorted_array);
 		sorted_array++;
 	}
+	my_free((void **)&sorted_array_head);
 	return (SUCCESS);
 }

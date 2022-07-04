@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 22:50:09 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/04 23:19:14 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/05 05:38:40 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,20 @@ static int	add_arg_with_value(char *arg, char *equal, t_shell *shell)
 	return (SUCCESS);
 }
 
-int	add_argv_to_envp(char **argv, t_shell *shell)
+int	add_arg_to_envp(char *arg, t_shell *shell)
 {
 	char	*equal;
 
-	while (*argv != NULL)
+	equal = ft_strchr(arg, '=');
+	if (equal == NULL)
 	{
-		equal = ft_strchr(*argv, '=');
-		if (equal == NULL)
-		{
-			if (add_arg_without_value(*argv, shell))
-				return (FAIL);
-		}
-		else
-		{
-			if (add_arg_with_value(*argv, equal, shell))
-				return (FAIL);
-		}
-		argv++;
+		if (add_arg_without_value(arg, shell))
+			return (FAIL);
+	}
+	else
+	{
+		if (add_arg_with_value(arg, equal, shell))
+			return (FAIL);
 	}
 	return (SUCCESS);
 }
