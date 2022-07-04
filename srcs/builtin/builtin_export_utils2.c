@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 22:50:09 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/05 05:38:40 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/05 06:02:31 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static int	add_arg_with_value(char *arg, char *equal, t_shell *shell)
 {
 	t_env	*env;
 
-	*equal = '\0';
 	env = get_env_from_key(arg, shell->env_list);
 	if (env == NULL)
 	{
@@ -38,12 +37,13 @@ static int	add_arg_with_value(char *arg, char *equal, t_shell *shell)
 	}
 	else
 	{
+		if (ft_strncmp("_", env->key, 2) == 0)
+			return (SUCCESS);
 		my_free((void **)&env->value);
 		env->value = ft_strdup(equal + 1);
 		if (env->value == NULL)
 			return (FAIL);
 	}
-	*equal = '=';
 	return (SUCCESS);
 }
 
@@ -59,8 +59,10 @@ int	add_arg_to_envp(char *arg, t_shell *shell)
 	}
 	else
 	{
+		*equal = '\0';
 		if (add_arg_with_value(arg, equal, shell))
 			return (FAIL);
+		*equal = '=';
 	}
 	return (SUCCESS);
 }

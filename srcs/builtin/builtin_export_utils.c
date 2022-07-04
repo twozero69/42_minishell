@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 18:20:43 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/05 05:10:04 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/05 05:59:58 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	print_env(t_env *env)
 {
 	char	*value;
 
-	if (ft_strncmp(env->key, "_", 2) == 0)
+	if (ft_strncmp("_", env->key, 2) == 0)
 		return ;
 	ft_putstr_fd("declare -x ", STDOUT_FILENO);
 	if (env->value == NULL)
