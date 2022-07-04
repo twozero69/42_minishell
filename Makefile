@@ -6,7 +6,7 @@
 #    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/07/03 16:21:28 by younglee         ###   ########seoul.kr   #
+#    Updated: 2022/07/04 23:25:10 by younglee         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS			= srcs/main.c \
 				srcs/utils/my_close.c \
 				srcs/utils/my_free.c \
 				srcs/utils/my_dup2.c \
+				srcs/utils/get_env_from_key.c \
 				srcs/lexer/lexer.c \
 				srcs/lexer/check_char.c \
 				srcs/lexer/add_new_token.c \
@@ -45,7 +46,12 @@ SRCS			= srcs/main.c \
 				srcs/builtin/builtin_exit.c \
 				srcs/builtin/builtin_exit_utils.c \
 				srcs/builtin/builtin_echo.c \
-				srcs/builtin/builtin_pwd.c
+				srcs/builtin/builtin_pwd.c \
+				srcs/builtin/builtin_env.c \
+				srcs/builtin/builtin_export.c \
+				srcs/builtin/builtin_export_utils.c \
+				srcs/builtin/builtin_export_utils2.c
+
 OBJS			= ${SRCS:.c=.o}
 INC				= -I./includes
 LIBFT			= -L./libft -lft

@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/03 16:13:49 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/04 23:27:08 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,9 @@ void	my_free(void **mem);
 // utils/my_dup2.c
 void	my_dup2(int old_fd, int new_fd, t_shell *shell);
 
+// utils/get_env_from_key.c
+t_env	*get_env_from_key(char *key, t_list *env_list);
+
 // lexer/lexer.c
 void	lexer(char *line, t_shell *shell);
 
@@ -219,5 +222,17 @@ void	builtin_echo(char **argv, t_shell *shell);
 
 // builtin/builtin_pwd.c
 void	builtin_pwd(t_shell *shell);
+
+// builtin/builtin_env.c
+void	builtin_env(t_shell *shell);
+
+// builtin/builtin_export.c
+void	builtin_export(char **argv, t_shell *shell);
+
+// builtin/builtin_export_utils.c
+int		print_export_list(t_shell *shell);
+
+// builtin/builtin_export_utils2.c
+int		add_argv_to_envp(char **argv, t_shell *shell);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 01:47:31 by younglee          #+#    #+#             */
-/*   Updated: 2022/06/26 04:12:43 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/04 21:45:58 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@ static int	add_new_env_four(t_env *env, t_shell *shell)
 
 static int	add_new_env_three(char *value, t_env *env, t_shell *shell)
 {
-	env->value = ft_strdup(value);
-	if (env->value == NULL)
-		return (FAIL);
+	if (value != NULL)
+	{
+		env->value = ft_strdup(value);
+		if (env->value == NULL)
+			return (FAIL);
+	}
 	if (add_new_env_four(env, shell) == FAIL)
 	{
 		my_free((void **)&env->value);
