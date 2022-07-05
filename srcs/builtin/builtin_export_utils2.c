@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 22:50:09 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/05 06:02:31 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/06 06:11:53 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,20 @@ static int	add_arg_without_value(char *arg, t_shell *shell)
 	return (SUCCESS);
 }
 
-static int	add_arg_with_value(char *arg, char *equal, t_shell *shell)
+int	add_arg_with_value(char *arg, char *value, t_shell *shell)
 {
 	t_env	*env;
 
 	env = get_env_from_key(arg, shell->env_list);
 	if (env == NULL)
 	{
-		if (add_new_env(arg, equal + 1, shell) == FAIL)
+		if (add_new_env(arg, value, shell) == FAIL)
 			return (FAIL);
 	}
 	else
 	{
-		if (ft_strncmp("_", env->key, 2) == 0)
-			return (SUCCESS);
 		my_free((void **)&env->value);
-		env->value = ft_strdup(equal + 1);
+		env->value = ft_strdup(value);
 		if (env->value == NULL)
 			return (FAIL);
 	}
@@ -60,7 +58,7 @@ int	add_arg_to_envp(char *arg, t_shell *shell)
 	else
 	{
 		*equal = '\0';
-		if (add_arg_with_value(arg, equal, shell))
+		if (add_arg_with_value(arg, equal + 1, shell))
 			return (FAIL);
 		*equal = '=';
 	}

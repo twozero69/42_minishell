@@ -6,13 +6,13 @@
 #    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/07/05 05:11:02 by younglee         ###   ########seoul.kr   #
+#    Updated: 2022/07/06 05:56:05 by younglee         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g
+CFLAGS			= -Wall -Wextra -Werror -g3 -fsanitize=address
 SRCS			= srcs/main.c \
 				srcs/utils/exit_with_custom_error.c \
 				srcs/utils/exit_with_clib_error.c \
@@ -26,6 +26,7 @@ SRCS			= srcs/main.c \
 				srcs/utils/my_free.c \
 				srcs/utils/my_dup2.c \
 				srcs/utils/get_env_from_key.c \
+				srcs/utils/set_shlvl.c \
 				srcs/lexer/lexer.c \
 				srcs/lexer/check_char.c \
 				srcs/lexer/add_new_token.c \
@@ -51,7 +52,6 @@ SRCS			= srcs/main.c \
 				srcs/builtin/builtin_export.c \
 				srcs/builtin/builtin_export_utils.c \
 				srcs/builtin/builtin_export_utils2.c
-
 OBJS			= ${SRCS:.c=.o}
 INC				= -I./includes
 LIBFT			= -L./libft -lft

@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/05 05:39:59 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/06 06:12:37 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,9 @@ void	my_dup2(int old_fd, int new_fd, t_shell *shell);
 // utils/get_env_from_key.c
 t_env	*get_env_from_key(char *key, t_list *env_list);
 
+// utils/set_shlvl.c
+int		set_shlvl(t_shell *shell);
+
 // lexer/lexer.c
 void	lexer(char *line, t_shell *shell);
 
@@ -234,5 +237,6 @@ int		print_export_list(t_shell *shell);
 
 // builtin/builtin_export_utils2.c
 int		add_arg_to_envp(char *arg, t_shell *shell);
+int		add_arg_with_value(char *arg, char *value, t_shell *shell);
 
 #endif

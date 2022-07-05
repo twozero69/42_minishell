@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 10:20:47 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/05 05:44:23 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/06 05:42:18 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	init(int argc, char **argv, char **envp, t_shell *shell)
 	my_dup(&shell->stdout_fd, STDOUT_FILENO, shell);
 	my_dup(&shell->stderr_fd, STDERR_FILENO, shell);
 	init_env_list(envp, shell);
-	//find SHLVL from env && SHLVL += 1
+	if (set_shlvl(shell))
+		exit_with_clib_error("init.c: malloc", shell);
 	signal(SIGQUIT, SIG_IGN);
 }
