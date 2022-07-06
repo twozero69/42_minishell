@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_export.c                                   :+:      :+:    :+:   */
+/*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/04 00:56:45 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/06 23:04:40 by younglee         ###   ########seoul.kr  */
+/*   Created: 2022/07/06 21:03:39 by younglee          #+#    #+#             */
+/*   Updated: 2022/07/06 23:04:46 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	print_identifier_error(char *arg)
 {
-	ft_putstr_fd("minishell: export: ", STDERR_FILENO);
+	ft_putstr_fd("minishell: unset: ", STDERR_FILENO);
 	ft_putstr_fd(arg, STDERR_FILENO);
 	ft_putendl_fd(": not a valid identifier", STDERR_FILENO);
 }
@@ -24,7 +24,7 @@ static int	check_arg(char *arg)
 	if (ft_isalpha(*arg) == FALSE && *arg != '_')
 		return (FALSE);
 	arg++;
-	while (*arg != '\0' && *arg != '=')
+	while (*arg != '\0')
 	{
 		if (ft_isalnum(*arg) == FALSE && *arg != '_')
 			return (FALSE);
@@ -33,14 +33,52 @@ static int	check_arg(char *arg)
 	return (TRUE);
 }
 
-void	builtin_export(char **argv, t_shell *shell)
+static void	free_env(t_list *list)
 {
-	int		idx;
+	t_env	*env;
+
+	env = (t_env *)list->content;
+	my_free((void **)&env->key);
+	my_free((void **)&env->value);
+	my_free((void **)&env);
+	my_free((void **)&list);
+}
+
+static void	remove_arg_from_envp(char *arg, t_list *curr, t_list **env_list)
+{
+	t_env	*find_env;
+	t_env	*curr_env;
+	t_list	*prev;
+	t_list	*next;
+
+	find_env = get_env_from_key(arg, *env_list);
+	if (find_env == NULL)
+		return ;
+	prev = NULL;
+	while (curr != NULL)
+	{
+		curr_env = (t_env *)curr->content;
+		next = curr->next;
+		if (find_env == curr_env)
+		{
+			if (prev == NULL)
+				*env_list = next;
+			else
+				prev->next = next;
+			free_env(curr);
+			break ;
+		}
+		prev = curr;
+		curr = next;
+	}
+}
+
+void	builtin_unset(char **argv, t_shell *shell)
+{
+	int	idx;
 
 	if (argv[1] == NULL)
 	{
-		if (print_export_list(shell) == FAIL)
-			exit_with_clib_error("builtin_export.c: malloc: ", shell);
 		shell->exit_status = EXIT_SUCCESS;
 		return ;
 	}
@@ -53,9 +91,7 @@ void	builtin_export(char **argv, t_shell *shell)
 			shell->exit_status = EXIT_FAILURE;
 			return ;
 		}
-		if (add_arg_to_envp(argv[idx], shell) == FAIL)
-			exit_with_clib_error("builtin_export.c: malloc: ", shell);
-		idx++;
+		remove_arg_from_envp(argv[idx], shell->env_list, &shell->env_list);
 	}
 	shell->exit_status = EXIT_SUCCESS;
 }

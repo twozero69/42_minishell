@@ -6,13 +6,13 @@
 #    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/07/06 05:56:05 by younglee         ###   ########seoul.kr   #
+#    Updated: 2022/07/07 00:07:59 by younglee         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS			= -Wall -Wextra -Werror -g
 SRCS			= srcs/main.c \
 				srcs/utils/exit_with_custom_error.c \
 				srcs/utils/exit_with_clib_error.c \
@@ -51,7 +51,9 @@ SRCS			= srcs/main.c \
 				srcs/builtin/builtin_env.c \
 				srcs/builtin/builtin_export.c \
 				srcs/builtin/builtin_export_utils.c \
-				srcs/builtin/builtin_export_utils2.c
+				srcs/builtin/builtin_export_utils2.c \
+				srcs/builtin/builtin_unset.c \
+				srcs/builtin/builtin_cd.c
 OBJS			= ${SRCS:.c=.o}
 INC				= -I./includes
 LIBFT			= -L./libft -lft
