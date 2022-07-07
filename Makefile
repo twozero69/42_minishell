@@ -6,7 +6,7 @@
 #    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/07/07 00:07:59 by younglee         ###   ########seoul.kr   #
+#    Updated: 2022/07/08 04:34:04 by younglee         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,8 @@ SRCS			= srcs/main.c \
 				srcs/builtin/builtin_export_utils.c \
 				srcs/builtin/builtin_export_utils2.c \
 				srcs/builtin/builtin_unset.c \
-				srcs/builtin/builtin_cd.c
+				srcs/builtin/builtin_cd.c \
+				srcs/builtin/builtin_executor.c
 OBJS			= ${SRCS:.c=.o}
 INC				= -I./includes
 LIBFT			= -L./libft -lft

@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 20:39:04 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/06 06:13:03 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/08 02:21:14 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,20 +75,20 @@ int	set_shlvl(t_shell *shell)
 
 	shlvl_env = get_env_from_key("SHLVL", shell->env_list);
 	if (shlvl_env == NULL)
-		return (add_arg_with_value("SHLVL", "1", shell));
+		return (add_env_with_value("SHLVL", "1", shell));
 	if (shlvl_env->value == NULL)
-		return (add_arg_with_value("SHLVL", "1", shell));
+		return (add_env_with_value("SHLVL", "1", shell));
 	if (check_numeric(shlvl_env->value) == FALSE)
-		return (add_arg_with_value("SHLVL", "1", shell));
+		return (add_env_with_value("SHLVL", "1", shell));
 	if (check_positive(shlvl_env->value) == FALSE)
-		return (add_arg_with_value("SHLVL", "0", shell));
+		return (add_env_with_value("SHLVL", "0", shell));
 	if (check_overflow(shlvl_env->value) == TRUE)
-		return (add_arg_with_value("SHLVL", "0", shell));
+		return (add_env_with_value("SHLVL", "0", shell));
 	new_shlvl = ft_atoi(shlvl_env->value) + 1;
 	if (new_shlvl >= 1000)
 	{
 		print_shlvl_max_over_error(new_shlvl);
-		return (add_arg_with_value("SHLVL", "1", shell));
+		return (add_env_with_value("SHLVL", "1", shell));
 	}
 	my_free((void **)&shlvl_env->value);
 	shlvl_env->value = ft_itoa(new_shlvl);

@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/07 00:07:32 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/08 04:24:39 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,7 @@ void	builtin_echo(char **argv, t_shell *shell);
 
 // builtin/builtin_pwd.c
 void	builtin_pwd(t_shell *shell);
+void	my_getcwd(char **cwd, t_shell *shell);
 
 // builtin/builtin_env.c
 void	builtin_env(t_shell *shell);
@@ -236,13 +237,16 @@ void	builtin_export(char **argv, t_shell *shell);
 int		print_export_list(t_shell *shell);
 
 // builtin/builtin_export_utils2.c
-int		add_arg_to_envp(char *arg, t_shell *shell);
-int		add_arg_with_value(char *arg, char *value, t_shell *shell);
+int		add_env_to_envp(char *arg, t_shell *shell);
+int		add_env_with_value(char *key, char *value, t_shell *shell);
 
 // builtin/builtin_unset.c
 void	builtin_unset(char **argv, t_shell *shell);
 
 // builtin/builtin_cd.c
 void	builtin_cd(char **argv, t_shell *shell);
+
+// builtin/builtin_executor.c
+void	builtin_executor(char **argv, t_shell *shell);
 
 #endif

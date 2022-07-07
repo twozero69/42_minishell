@@ -6,13 +6,13 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 23:42:53 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/03 16:39:00 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/08 04:12:26 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	my_getcwd(char **cwd, t_shell *shell)
+void	my_getcwd(char **cwd, t_shell *shell)
 {
 	*cwd = getcwd(NULL, 0);
 	if (*cwd == NULL)

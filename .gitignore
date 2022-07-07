@@ -2,5 +2,7 @@
 **/.DS_Store
 **/*.o
 **/*.a
-**/minishell
 **/*.log
+**/*.dylib
+**/*.so
+**/minishell

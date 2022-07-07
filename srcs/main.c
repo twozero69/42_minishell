@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:25:16 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/07 00:20:42 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/08 04:28:08 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,12 @@ int	main(int argc, char **argv, char **envp)
 			lexer(shell.line, &shell);
 		if (shell.status == SHELL_PARSER && shell.token_list != NULL)
 			parser(&shell);
+
+		//test
+		if (shell.ast != NULL && shell.ast->argv != NULL)
+			builtin_executor(shell.ast->argv, &shell);
+		shell.status = SHELL_READLINE;
+
 		// if (shell.status == SHELL_EXPANDER && shell.ast != NULL)
 		// 	expander();
 		// if (shell.status == SHELL_EXECUTOR && shell.ast != NULL)

@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 00:56:45 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/06 23:04:40 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/08 02:19:50 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	builtin_export(char **argv, t_shell *shell)
 			shell->exit_status = EXIT_FAILURE;
 			return ;
 		}
-		if (add_arg_to_envp(argv[idx], shell) == FAIL)
+		if (add_env_to_envp(argv[idx], shell) == FAIL)
 			exit_with_clib_error("builtin_export.c: malloc: ", shell);
 		idx++;
 	}
