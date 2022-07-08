@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/08 04:24:39 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/08 22:32:26 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,10 @@ void	builtin_unset(char **argv, t_shell *shell);
 
 // builtin/builtin_cd.c
 void	builtin_cd(char **argv, t_shell *shell);
+
+// builtin/builtin_cd_utils.c
+int		change_directory(char *dir, t_shell *shell);
+void	print_dir_error(char *dir);
 
 // builtin/builtin_executor.c
 void	builtin_executor(char **argv, t_shell *shell);

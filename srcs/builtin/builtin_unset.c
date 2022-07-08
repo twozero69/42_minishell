@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 21:03:39 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/06 23:04:46 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/08 16:39:50 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ static void	free_env(t_list *list)
 	my_free((void **)&list);
 }
 
-static void	remove_arg_from_envp(char *arg, t_list *curr, t_list **env_list)
+static void	remove_env_from_envp(char *key, t_list *curr, t_list **env_list)
 {
 	t_env	*find_env;
 	t_env	*curr_env;
 	t_list	*prev;
 	t_list	*next;
 
-	find_env = get_env_from_key(arg, *env_list);
+	find_env = get_env_from_key(key, *env_list);
 	if (find_env == NULL)
 		return ;
 	prev = NULL;
@@ -91,7 +91,8 @@ void	builtin_unset(char **argv, t_shell *shell)
 			shell->exit_status = EXIT_FAILURE;
 			return ;
 		}
-		remove_arg_from_envp(argv[idx], shell->env_list, &shell->env_list);
+		remove_env_from_envp(argv[idx], shell->env_list, &shell->env_list);
+		idx++;
 	}
 	shell->exit_status = EXIT_SUCCESS;
 }

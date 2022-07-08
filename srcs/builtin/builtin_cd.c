@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 23:08:13 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/08 04:33:45 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/08 22:31:17 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,55 +19,41 @@ static void	print_not_set_error(char *key)
 	ft_putendl_fd(" not set", STDERR_FILENO);
 }
 
-static void	print_dir_error(char *dir)
-{
-	if (errno == 0)
-		return ;
-	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-	ft_putstr_fd(dir, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putendl_fd(strerror(errno), STDERR_FILENO);
-	errno = 0;
-}
-
-static int	change_directory(char *dir, t_shell *shell)
-{
-	t_env	*pwd;
-	char	*pwd_value;
-	char	*cwd;
-	int		result;
-
-	if (chdir(dir) == FAIL)
-	{
-		print_dir_error(dir);
-		shell->exit_status = FAIL;
-		return (SUCCESS);
-	}
-	pwd = get_env_from_key("PWD", shell->env_list);
-	if (pwd != NULL)
-		pwd_value = pwd->value;
-	else
-		pwd_value = NULL;
-	if (add_env_with_value("OLDPWD", pwd_value, shell) == FAIL)
-		return (FAIL);
-	my_getcwd(&cwd, shell);
-	result = add_env_with_value("PWD", cwd, shell);
-	my_free((void **)&cwd);
-	shell->exit_status = SUCCESS;
-	return (result);
-}
-
-static int	change_directory_to_env(char *key, t_shell *shell)
+static int	change_directory_to_home(t_shell *shell)
 {
 	t_env	*env;
 
-	env = get_env_from_key(key, shell->env_list);
+	env = get_env_from_key("HOME", shell->env_list);
 	if (env == NULL || env->value == NULL)
 	{
-		print_not_set_error(key);
+		print_not_set_error("HOME");
 		shell->exit_status = EXIT_FAILURE;
 		return (SUCCESS);
 	}
+	if (change_directory(env->value, shell) == FAIL)
+		return (FAIL);
+	return (SUCCESS);
+}
+
+static int	change_directory_to_oldpwd(t_shell *shell)
+{
+	t_env	*env;
+
+	env = get_env_from_key("OLDPWD", shell->env_list);
+	if (env == NULL || env->value == NULL)
+	{
+		print_not_set_error("OLDPWD");
+		shell->exit_status = EXIT_FAILURE;
+		return (SUCCESS);
+	}
+	if (env->value[0] != '\0' && chdir(env->value) == FAIL)
+	{
+		print_dir_error(env->value);
+		shell->exit_status = EXIT_FAILURE;
+		return (SUCCESS);
+	}
+	if (isatty(STDOUT_FILENO) == TRUE)
+		ft_putendl_fd(env->value, STDOUT_FILENO);
 	if (change_directory(env->value, shell) == FAIL)
 		return (FAIL);
 	return (SUCCESS);
@@ -77,7 +63,7 @@ void	builtin_cd(char **argv, t_shell *shell)
 {
 	if (argv[1] == NULL)
 	{
-		if (change_directory_to_env("HOME", shell) == FAIL)
+		if (change_directory_to_home(shell) == FAIL)
 			exit_with_clib_error("builtin_cd.c: malloc", shell);
 		return ;
 	}
@@ -89,7 +75,7 @@ void	builtin_cd(char **argv, t_shell *shell)
 	}
 	if (ft_strncmp("-", argv[1], 2) == 0)
 	{
-		if (change_directory_to_env("OLDPWD", shell))
+		if (change_directory_to_oldpwd(shell))
 			exit_with_clib_error("builtin_cd.c: malloc", shell);
 		return ;
 	}
