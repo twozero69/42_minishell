@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:25:16 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/02 03:14:14 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/08 23:01:39 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ static int	my_readline(const char *prompt, t_shell *shell)
 	shell->line = readline(prompt);
 	if (shell->line == NULL)
 	{
-		ft_putstr_fd("\x1b[1A", STDERR_FILENO);
-		ft_putstr_fd("\033[3C", STDERR_FILENO);
-		ft_putendl_fd("exit", STDERR_FILENO);
+		// ft_putstr_fd("\x1b[1A", STDERR_FILENO); // maybe not necessary
+		// ft_putstr_fd("\033[3C", STDERR_FILENO);
+		if (isatty(STDERR_FILENO))
+			ft_putendl_fd("exit", STDERR_FILENO);
 		return (FALSE);
 	}
 	signal(SIGINT, wait_exec_sigint_handler);
@@ -55,28 +56,6 @@ static void	reset_resources(t_shell *shell)
 	free_ast(&shell->ast);
 }
 
-void	print_argv(char **argv)
-{
-	printf("| argv: ");
-	while (*argv != NULL)
-	{
-		printf("%s ", *argv);
-		argv++;
-	}
-}
-
-void	print_ast(t_ast *node, int depth)
-{
-	printf("depth: %d | type: %d ", depth, node->type);
-	if (node->argv != NULL)
-		print_argv(node->argv);
-	printf("\n");
-	if (node->left_child != NULL)
-		print_ast(node->left_child, depth + 1);
-	if (node->right_child != NULL)
-		print_ast(node->right_child, depth + 1);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
@@ -91,18 +70,14 @@ int	main(int argc, char **argv, char **envp)
 		if (shell.status == SHELL_PARSER && shell.token_list != NULL)
 			parser(&shell);
 
-		//parser test
-		if (shell.ast != NULL)
-			print_ast(shell.ast, 0);
-
-		//built in exit test
-		builtin_exit(shell.ast->argv, &shell);
-
+		//test
+		if (shell.ast != NULL && shell.ast->argv != NULL)
+			builtin_executor(shell.ast->argv, &shell);
 		shell.status = SHELL_READLINE;
 
-		// if (shell.status == SHELL_EXPANDER)
+		// if (shell.status == SHELL_EXPANDER && shell.ast != NULL)
 		// 	expander();
-		// if (shell.status == SHELL_EXECUTOR)
+		// if (shell.status == SHELL_EXECUTOR && shell.ast != NULL)
 		// 	executor();
 		reset_resources(&shell);
 	}

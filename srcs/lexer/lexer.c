@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 16:37:09 by younglee          #+#    #+#             */
-/*   Updated: 2022/06/29 10:15:39 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/03 16:14:18 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	lexer(char *line, t_shell *shell)
 				return ;
 			}
 			if (add_new_token(line, token_length, token_type, shell) == FAIL)
-				exit_with_error("lexer.c: malloc failed", shell);
+				exit_with_clib_error("lexer.c: malloc", shell);
 			line += token_length;
 		}
 	}

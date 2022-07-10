@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 00:55:00 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/02 03:22:33 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/02 13:02:08 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,11 @@ long	my_atoi(const char *arg)
 	return (number);
 }
 
-void	exit_without_error(int exit_status)
+void	exit_without_error(int exit_status, t_shell *shell)
 {
 	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
 		ft_putendl_fd("exit", STDERR_FILENO);
+	free_resources(shell);
 	exit(exit_status);
 }
 

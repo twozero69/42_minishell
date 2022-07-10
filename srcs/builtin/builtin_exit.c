@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 21:37:09 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/02 03:24:24 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/02 18:55:20 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,11 @@ static int	check_argv(char **argv, t_shell *shell)
 void	builtin_exit(char **argv, t_shell *shell)
 {
 	if (check_argv(argv, shell) == FALSE)
+	{
+		free_resources(shell);
 		exit(shell->exit_status);
+	}
 	if (argv[1] == NULL)
-		exit_without_error(0);
-	exit_without_error(my_atoi(argv[1]) % 256);
+		exit_without_error(EXIT_SUCCESS, shell);
+	exit_without_error(my_atoi(argv[1]) % 256, shell);
 }

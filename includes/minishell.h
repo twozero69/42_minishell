@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/02 03:30:39 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/08 22:32:26 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdio.h>
 # include <errno.h>
 # include <string.h>
+# include <term.h>
 # include "readline/readline.h"
 # include "readline/history.h"
 # include "libft.h"
@@ -120,8 +121,11 @@ typedef struct s_shell
 	t_ast			*ast;
 }	t_shell;
 
-// utils/exit_with_error.c
-void	exit_with_error(char *error_msg, t_shell *shell);
+// utils/exit_with_custom_error.c
+void	exit_with_custom_error(char *error_msg, t_shell *shell);
+
+// utils/exit_with_clib_error.c
+void	exit_with_clib_error(char *error_msg, t_shell *shell);
 
 // utils/print_minishell_error.c
 void	print_minishell_error(int shell_name_flag, char *msg1, char *msg2);
@@ -149,6 +153,12 @@ void	my_free(void **mem);
 
 // utils/my_dup2.c
 void	my_dup2(int old_fd, int new_fd, t_shell *shell);
+
+// utils/get_env_from_key.c
+t_env	*get_env_from_key(char *key, t_list *env_list);
+
+// utils/set_shlvl.c
+int		set_shlvl(t_shell *shell);
 
 // lexer/lexer.c
 void	lexer(char *line, t_shell *shell);
@@ -206,8 +216,41 @@ void	builtin_exit(char **argv, t_shell *shell);
 
 // builtin/builtin_exit_utils.c
 long	my_atoi(const char *arg);
-void	exit_without_error(int exit_status);
+void	exit_without_error(int exit_status, t_shell *shell);
 int		return_false_with_numeric_error(char *arg, t_shell *shell);
 int		return_false_with_too_many_error(t_shell *shell);
+
+// builtin/builtin_echo.c
+void	builtin_echo(char **argv, t_shell *shell);
+
+// builtin/builtin_pwd.c
+void	builtin_pwd(t_shell *shell);
+void	my_getcwd(char **cwd, t_shell *shell);
+
+// builtin/builtin_env.c
+void	builtin_env(t_shell *shell);
+
+// builtin/builtin_export.c
+void	builtin_export(char **argv, t_shell *shell);
+
+// builtin/builtin_export_utils.c
+int		print_export_list(t_shell *shell);
+
+// builtin/builtin_export_utils2.c
+int		add_env_to_envp(char *arg, t_shell *shell);
+int		add_env_with_value(char *key, char *value, t_shell *shell);
+
+// builtin/builtin_unset.c
+void	builtin_unset(char **argv, t_shell *shell);
+
+// builtin/builtin_cd.c
+void	builtin_cd(char **argv, t_shell *shell);
+
+// builtin/builtin_cd_utils.c
+int		change_directory(char *dir, t_shell *shell);
+void	print_dir_error(char *dir);
+
+// builtin/builtin_executor.c
+void	builtin_executor(char **argv, t_shell *shell);
 
 #endif

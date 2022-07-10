@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_dup2.c                                          :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/26 03:02:54 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/03 16:16:34 by younglee         ###   ########seoul.kr  */
+/*   Created: 2022/07/03 23:47:22 by younglee          #+#    #+#             */
+/*   Updated: 2022/07/04 04:25:51 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_dup2(int old_fd, int new_fd, t_shell *shell)
+void	builtin_env(t_shell *shell)
 {
-	if (dup2(old_fd, new_fd) == FAIL)
-		exit_with_clib_error("my_dup2.c: dup2", shell);
+	t_list	*env_list;
+	t_env	*env;
+
+	env_list = shell->env_list;
+	while (env_list != NULL)
+	{
+		env = (t_env *)env_list->content;
+		if (env->value != NULL)
+			printf("%s=%s\n", env->key, env->value);
+		env_list = env_list->next;
+	}
 }
