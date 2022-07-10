@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:25:16 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/08 23:01:39 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/10 23:49:56 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,15 @@ int	main(int argc, char **argv, char **envp)
 		if (shell.status == SHELL_PARSER && shell.token_list != NULL)
 			parser(&shell);
 
+		if (shell.status == SHELL_EXPANDER && shell.ast != NULL)
+			expander(&shell);
+			
 		//test
 		if (shell.ast != NULL && shell.ast->argv != NULL)
 			builtin_executor(shell.ast->argv, &shell);
 		shell.status = SHELL_READLINE;
 
-		// if (shell.status == SHELL_EXPANDER && shell.ast != NULL)
-		// 	expander();
+
 		// if (shell.status == SHELL_EXECUTOR && shell.ast != NULL)
 		// 	executor();
 		reset_resources(&shell);
