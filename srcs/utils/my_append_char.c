@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 13:05:05 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/11 00:20:45 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/11 00:46:32 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*my_append_char(char *before, char c)
 	char	*ret;
 	int		i;
 
-	if (ft_memset(&i, 0, sizeof(int)) && before != NULL)
+	if (ft_memset(&len, 0, sizeof(int)) && before != NULL)
 		len = ft_strlen(before);
 	if (c == '\n')
 		return (before);
