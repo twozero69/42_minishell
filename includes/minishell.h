@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/08 04:24:39 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/11 00:12:44 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,5 +248,12 @@ void	builtin_cd(char **argv, t_shell *shell);
 
 // builtin/builtin_executor.c
 void	builtin_executor(char **argv, t_shell *shell);
+
+// expander/expander.c
+void	expander(t_shell *shell);
+char	*set_expander(char *argv, t_list *env_list);
+
+// util/my_append_char.c
+char	*my_append_char(char *before, char c);
 
 #endif

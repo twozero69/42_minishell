@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
+#    By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/07/08 04:34:04 by younglee         ###   ########seoul.kr   #
+#    Updated: 2022/07/11 00:09:03 by jubae            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,10 @@ SRCS			= srcs/main.c \
 				srcs/builtin/builtin_export_utils2.c \
 				srcs/builtin/builtin_unset.c \
 				srcs/builtin/builtin_cd.c \
-				srcs/builtin/builtin_executor.c
+				srcs/builtin/builtin_executor.c \
+				srcs/expander/expander.c \
+				srcs/expander/set_expander.c \
+				srcs/utils/my_append_char.c
 OBJS			= ${SRCS:.c=.o}
 INC				= -I./includes
 LIBFT			= -L./libft -lft
