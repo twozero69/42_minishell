@@ -246,6 +246,10 @@ void	builtin_unset(char **argv, t_shell *shell);
 // builtin/builtin_cd.c
 void	builtin_cd(char **argv, t_shell *shell);
 
+// builtin/builtin_cd_utils.c
+int		change_directory(char *dir, t_shell *shell);
+void	print_dir_error(char *dir);
+
 // builtin/builtin_executor.c
 void	builtin_executor(char **argv, t_shell *shell);
 

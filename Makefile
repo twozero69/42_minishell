@@ -54,6 +54,7 @@ SRCS			= srcs/main.c \
 				srcs/builtin/builtin_export_utils2.c \
 				srcs/builtin/builtin_unset.c \
 				srcs/builtin/builtin_cd.c \
+				srcs/builtin/builtin_cd_utils.c \
 				srcs/builtin/builtin_executor.c \
 				srcs/expander/expander.c \
 				srcs/expander/set_expander.c \
