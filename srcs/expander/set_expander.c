@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 00:08:11 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/11 00:15:53 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/12 00:26:25 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,22 @@ int	when_other(char *arg, t_list *env_list, char **result, int i)
 	char	*env_name;
 	t_env	*env_temp;
 
-	(void)env_list;
 	if (arg[i] == '$')
-	{
-		if (arg[i + 1] == '?')
-		{
+		if (arg[i + 1] == '?' && ++i && i++)
 			*result = my_append_char(*result, '0');
-			i += 2;
-		}
-		else
-		{
-			env_name = NULL;
-			while (!ft_strchr(" \t\n$\"\'\\/", arg[++i]))
-				env_name = my_append_char(env_name, arg[i]);
+	else
+	{
+		env_name = NULL;
+		env_temp = NULL;
+		while (!ft_strchr(" \t\n$\"\'\\/", arg[++i]))
+			env_name = my_append_char(env_name, arg[i]);
+		if (env_name != NULL)
 			env_temp = get_env_from_key(env_name, env_list);
-			if (env_temp != NULL)
-				*result = get_env_set_envp(env_temp->value, *result);
+		else
+			*result = my_append_char(*result, '$');
+		if (env_temp != NULL)
+		{
+			*result = get_env_set_envp(env_temp->value, *result);
 			free(env_name);
 		}
 	}
@@ -71,16 +71,17 @@ int	when_dquote_env(char *arg, t_list *env_list, char **result, int i)
 	t_env	*env_temp;
 
 	env_name = NULL;
-	if (arg[i + 1] == '?')
-	{
+	env_temp = NULL;
+	if (arg[i + 1] == '?' && ++i && ++i)
 		*result = my_append_char(*result, '0');
-		i += 2;
-	}
 	else
 	{
 		while (!ft_strchr(" \t\n$\"\'\\/", arg[++i]))
 			env_name = my_append_char(env_name, arg[i]);
-		env_temp = get_env_from_key(env_name, env_list);
+		if (env_name != NULL)
+			env_temp = get_env_from_key(env_name, env_list);
+		else
+			*result = my_append_char(*result, '$');
 		if (env_temp != NULL)
 		{
 			temp = *result;
