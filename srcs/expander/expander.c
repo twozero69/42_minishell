@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 10:33:30 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/16 00:54:43 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/16 00:56:30 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	expander_start(t_ast *node, t_list *env_list, int depth)
 	int	i;
 
 	i = 0;
-	printf("depth: %d | type: %d\n", depth, node->type);
+	// printf("depth: %d | type: %d\n", depth, node->type);
 	while (node->argv != NULL && node->argv[i] != NULL)
 	{
 		// printf("before expander : [%s]\n", node->argv[i]);
