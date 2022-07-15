@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:25:16 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/10 23:49:56 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/16 05:39:42 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,6 @@ static void	readline_sigint_handler(int signo)
 	rl_redisplay();
 }
 
-static void	wait_exec_sigint_handler(int signo)
-{
-	if (signo != SIGINT)
-		return ;
-	ft_putchar_fd('\n', STDERR_FILENO);
-}
-
 static int	my_readline(const char *prompt, t_shell *shell)
 {
 	signal(SIGINT, readline_sigint_handler);
@@ -41,7 +34,7 @@ static int	my_readline(const char *prompt, t_shell *shell)
 			ft_putendl_fd("exit", STDERR_FILENO);
 		return (FALSE);
 	}
-	signal(SIGINT, wait_exec_sigint_handler);
+	signal(SIGINT, SIG_IGN);
 	shell->status = SHELL_LEXER;
 	return (TRUE);
 }
@@ -69,18 +62,15 @@ int	main(int argc, char **argv, char **envp)
 			lexer(shell.line, &shell);
 		if (shell.status == SHELL_PARSER && shell.token_list != NULL)
 			parser(&shell);
-
 		if (shell.status == SHELL_EXPANDER && shell.ast != NULL)
 			expander(&shell);
-			
+		if (shell.status == SHELL_EXECUTOR && shell.ast != NULL)
+			executor(&shell);
+
 		//test
 		if (shell.ast != NULL && shell.ast->argv != NULL)
 			builtin_executor(shell.ast->argv, &shell);
-		shell.status = SHELL_READLINE;
 
-
-		// if (shell.status == SHELL_EXECUTOR && shell.ast != NULL)
-		// 	executor();
 		reset_resources(&shell);
 	}
 	free_resources(&shell);

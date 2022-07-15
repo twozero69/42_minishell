@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+         #
+#    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/07/15 20:15:10 by jubae            ###   ########.fr        #
+#    Updated: 2022/07/16 06:09:55 by younglee         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,10 @@ SRCS			= srcs/main.c \
 				srcs/expander/expander.c \
 				srcs/expander/find_wilcard.c \
 				srcs/expander/set_expander.c \
-				srcs/utils/my_append_char.c
+				srcs/utils/my_append_char.c \
+				srcs/executor/executor.c \
+				srcs/executor/open_heredoc.c \
+				srcs/executor/execute_ast.c
 OBJS			= ${SRCS:.c=.o}
 INC				= -I./includes
 LIBFT			= -L./libft -lft

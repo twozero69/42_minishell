@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/15 21:52:28 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/16 06:07:03 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <errno.h>
 # include <string.h>
 # include <term.h>
+# include <sys/wait.h>
 # include "readline/readline.h"
 # include "readline/history.h"
 # include "libft.h"
@@ -48,6 +49,9 @@
 #  define EXIT_TOO_MANY_ARGUMENTS 1
 #  define EXIT_NOT_NUMERIC_ARGUMENTS 255
 # endif
+
+// heredoc exit status
+# define EXIT_HEREDOC_BY_SIGINT 123
 
 enum e_token
 {
@@ -91,6 +95,7 @@ typedef struct s_ast
 	struct s_ast	*left_child;
 	struct s_ast	*right_child;
 	char			**argv;
+	int				pipe[2];
 }	t_ast;
 
 typedef struct s_env
@@ -119,6 +124,7 @@ typedef struct s_shell
 	char			*line;
 	t_list			*token_list;
 	t_ast			*ast;
+	int				heredoc_line_count;
 }	t_shell;
 
 // utils/exit_with_custom_error.c
@@ -174,6 +180,7 @@ int		add_new_token(char *line, int length, enum e_token type, t_shell *sh);
 
 // parser/parser.c
 void	parser(t_shell *shell);
+void	init_ast_node(t_ast *node);
 
 // parser/check_syntax.c
 int		check_syntax(t_list *token_list);
@@ -260,5 +267,14 @@ void	builtin_executor(char **argv, t_shell *shell);
 void	expander(t_shell *shell);
 void	find_wilcard(char *argv, char **result, int i);
 char	*set_expander(char *argv, t_list *env_list);
+
+// executor/executor.c
+void	executor(t_shell *shell);
+
+// executor/open_heredoc.c
+void	open_heredoc(t_ast *node, t_shell *shell);
+
+// executor/execute_ast.c
+void	excute_ast(t_ast *node, t_shell *shell);
 
 #endif
