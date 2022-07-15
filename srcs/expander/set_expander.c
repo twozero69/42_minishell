@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 00:08:11 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/12 00:26:25 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/15 21:45:44 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	when_other(char *arg, t_list *env_list, char **result, int i)
 		}
 	}
 	else
-		*result = my_append_char(*result, arg[i++]);
+		find_wilcard(arg, result, i++);
 	return (i);
 }
 

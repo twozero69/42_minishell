@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/11 00:12:44 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/15 21:52:28 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,9 @@ t_env	*get_env_from_key(char *key, t_list *env_list);
 // utils/set_shlvl.c
 int		set_shlvl(t_shell *shell);
 
+// utils/my_append_char.c
+char	*my_append_char(char *before, char c);
+
 // lexer/lexer.c
 void	lexer(char *line, t_shell *shell);
 
@@ -255,9 +258,7 @@ void	builtin_executor(char **argv, t_shell *shell);
 
 // expander/expander.c
 void	expander(t_shell *shell);
+void	find_wilcard(char *argv, char **result, int i);
 char	*set_expander(char *argv, t_list *env_list);
-
-// util/my_append_char.c
-char	*my_append_char(char *before, char c);
 
 #endif
