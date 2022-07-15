@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 00:08:11 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/15 21:45:44 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/16 00:40:22 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ char	*get_env_set_envp(char *env_temp, char *result)
 		}
 		else
 		{
-			result = my_append_char(result, env_temp[j]);
+			// result = my_append_char(result, env_temp[j]);
+			find_wilcard(env_temp, &result, j);
 			j++;
 		}
 	}

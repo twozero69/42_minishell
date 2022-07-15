@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 16:59:29 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/15 21:45:16 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/16 00:49:42 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,22 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "minishell.h"
+
+int	is_wilcard(char *argv, int i)
+{
+	if (i == 0)
+	{
+		if ((argv[i] == '*' && (argv[i + 1] == 0 || argv[i + 1] == ' ')))
+			return (1);
+	}
+	else
+	{
+		if ((argv[i - 1] != '=' && argv[i] == '*' && \
+		(argv[i + 1] == 0 || argv[i + 1] == ' ')))
+			return (1);
+	}
+	return (0);
+}
 
 char	*get_wilcard(int init, char *path)
 {
@@ -49,7 +65,7 @@ void	find_wilcard(char *argv, char **result, int i)
 	char	*temp1;
 	char	*temp2;
 
-	if (argv[i] == '*' && (argv[i + 1] == 0 || argv[i + 1] == ' '))
+	if (is_wilcard(argv, i))
 	{
 		temp1 = getcwd(NULL, 0);
 		temp2 = get_wilcard(1, temp1);
