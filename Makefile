@@ -6,7 +6,7 @@
 #    By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/07/15 20:15:10 by jubae            ###   ########.fr        #
+#    Updated: 2022/07/16 00:51:41 by jubae            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS			= srcs/main.c \
 				srcs/utils/my_dup2.c \
 				srcs/utils/get_env_from_key.c \
 				srcs/utils/set_shlvl.c \
+				srcs/utils/my_append_char.c \
 				srcs/lexer/lexer.c \
 				srcs/lexer/check_char.c \
 				srcs/lexer/add_new_token.c \
@@ -58,8 +59,7 @@ SRCS			= srcs/main.c \
 				srcs/builtin/builtin_executor.c \
 				srcs/expander/expander.c \
 				srcs/expander/find_wilcard.c \
-				srcs/expander/set_expander.c \
-				srcs/utils/my_append_char.c
+				srcs/expander/set_expander.c
 OBJS			= ${SRCS:.c=.o}
 INC				= -I./includes
 LIBFT			= -L./libft -lft
