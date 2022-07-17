@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/17 19:32:08 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 19:33:18 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,18 @@ typedef struct s_env
 enum e_shell
 {
 	SHELL_READLINE,
-	SHELL_LEXER,// # include <term.h>
+	SHELL_LEXER,
+	SHELL_PARSER,
+	SHELL_EXPANDER,
+	SHELL_EXECUTOR
+};
 
+typedef struct s_shell
+{
+	int				exit_status;
+	int				stdin_fd;
+	int				stdout_fd;
+	t_list			*env_list;
 	enum e_shell	status;
 	char			*line;
 	t_list			*token_list;
