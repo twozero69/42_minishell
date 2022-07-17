@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/15 21:52:28 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/18 02:56:41 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,9 @@ int		set_shlvl(t_shell *shell);
 // utils/my_append_char.c
 char	*my_append_char(char *before, char c);
 
+// utils/my_append_char_lst.c
+void	my_append_char_lst(t_list *lst, char c);
+
 // lexer/lexer.c
 void	lexer(char *line, t_shell *shell);
 
@@ -257,8 +260,12 @@ void	print_dir_error(char *dir);
 void	builtin_executor(char **argv, t_shell *shell);
 
 // expander/expander.c
+void	tda_free(char **tda);
+int		get_lst_num(t_list *ret);
 void	expander(t_shell *shell);
+void	find_wilcard_lst(char *argv, t_list *ret, int i);
 void	find_wilcard(char *argv, char **result, int i);
+void	set_expander_lst(char *argv, t_list *env_list, t_list *ret);
 char	*set_expander(char *argv, t_list *env_list);
 
 #endif
