@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   execute_and.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/15 23:59:16 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/17 06:33:57 by younglee         ###   ########seoul.kr  */
+/*   Created: 2022/07/17 07:03:32 by younglee          #+#    #+#             */
+/*   Updated: 2022/07/17 07:04:50 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	executor(t_shell *shell)
+void	execute_and(t_ast *node, t_shell *shell, int pipe_flag)
 {
-	open_heredoc(shell->ast, shell);
-	if (shell->status != SHELL_EXECUTOR)
+	execute_ast(node->left_child, shell, pipe_flag);
+	if (shell->exit_status != EXIT_SUCCESS)
 		return ;
-	execute_ast(shell->ast, shell, FALSE);
-	if (shell->status != SHELL_EXECUTOR)
-		return ;
-	free_ast(&shell->ast);
-	shell->status = SHELL_READLINE;
+	execute_ast(node->right_child, shell, pipe_flag);
 }

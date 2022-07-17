@@ -6,19 +6,11 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 01:42:59 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/16 05:15:48 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 10:40:08 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	heredoc_sigint_handler(int signo)
-{
-	if (signo != SIGINT)
-		return ;
-	ft_putchar_fd('\n', STDERR_FILENO);
-	exit(EXIT_HEREDOC_BY_SIGINT);
-}
 
 static void	print_heredoc_error(char *eof_str, int heredoc_line_count)
 {
@@ -46,7 +38,7 @@ static void	write_heredoc(int entrance_fd, char *eof_str, t_shell *shell)
 		}
 		if (strncmp(line, eof_str, cmp_len) == 0)
 			break ;
-		ft_putendl_fd("line", entrance_fd);
+		ft_putendl_fd(line, entrance_fd);
 	}
 }
 
@@ -66,14 +58,13 @@ void	open_heredoc(t_ast *node, t_shell *shell)
 			exit_with_clib_error("executor.c: fork", shell);
 		if (pid == 0)
 		{
-			signal(SIGINT, heredoc_sigint_handler);
+			signal(SIGINT, SIG_DFL);
 			write_heredoc(node->pipe[1], node->right_child->argv[0], shell);
 			free_resources(shell);
-			exit(0);
+			exit(EXIT_SUCCESS);
 		}
 		waitpid(pid, &status, 0);
-		if (WEXITSTATUS(status) == EXIT_HEREDOC_BY_SIGINT)
-			shell->status = SHELL_READLINE;
+		shell->exit_status = get_child_exit_status(status);
 	}
 	open_heredoc(node->left_child, shell);
 	open_heredoc(node->right_child, shell);

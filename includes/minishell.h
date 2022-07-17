@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/16 06:07:03 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 10:30:04 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@
 # include <stdio.h>
 # include <errno.h>
 # include <string.h>
-# include <term.h>
+// # include <term.h>
+# include <fcntl.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include "readline/readline.h"
 # include "readline/history.h"
 # include "libft.h"
@@ -50,8 +52,17 @@
 #  define EXIT_NOT_NUMERIC_ARGUMENTS 255
 # endif
 
-// heredoc exit status
-# define EXIT_HEREDOC_BY_SIGINT 123
+// cmd exit status
+# define EXIT_CMD_COMMAND_NOT_FOUND 127
+
+// file open option
+# ifdef __linux__
+#  define APPEND_OPEN 1089
+#  define NORMAL_OPEN 577
+# elif __APPLE__
+#  define APPEND_OPEN 521
+#  define NORMAL_OPEN 1537
+# endif
 
 enum e_token
 {
@@ -96,6 +107,10 @@ typedef struct s_ast
 	struct s_ast	*right_child;
 	char			**argv;
 	int				pipe[2];
+	int				cmd_pid;
+	int				cmd_in_fd;
+	int				cmd_out_fd;
+	int				redir_file_fd;
 }	t_ast;
 
 typedef struct s_env
@@ -118,7 +133,6 @@ typedef struct s_shell
 	int				exit_status;
 	int				stdin_fd;
 	int				stdout_fd;
-	int				stderr_fd;
 	t_list			*env_list;
 	enum e_shell	status;
 	char			*line;
@@ -144,6 +158,7 @@ void	free_token_list(t_list **token_list);
 
 // utils/free_ast.c
 void	free_ast(t_ast **ast);
+void	close_pipe(int *pipe);
 
 // utils/init.c
 void	init(int argc, char **argv, char **envp, t_shell *shell);
@@ -260,8 +275,9 @@ void	builtin_cd(char **argv, t_shell *shell);
 int		change_directory(char *dir, t_shell *shell);
 void	print_dir_error(char *dir);
 
-// builtin/builtin_executor.c
-void	builtin_executor(char **argv, t_shell *shell);
+// builtin/execute_builtin.c
+int		check_builtin(char **argv);
+void	execute_builtin(char **argv, t_shell *shell);
 
 // expander/expander.c
 void	expander(t_shell *shell);
@@ -275,6 +291,45 @@ void	executor(t_shell *shell);
 void	open_heredoc(t_ast *node, t_shell *shell);
 
 // executor/execute_ast.c
-void	excute_ast(t_ast *node, t_shell *shell);
+void	execute_ast(t_ast *node, t_shell *shell, int pipe_flag);
+
+// executor/execute_cmd.c
+void	execute_cmd(t_ast *node, t_shell *shell, int pipe_flag);
+void	set_redir(t_ast *node, t_shell *shell);
+
+// executor/execute_pipe.c
+void	execute_pipe(t_ast *node, t_shell *shell, int pipe_flag);
+
+// executor/execute_and.c
+void	execute_and(t_ast *node, t_shell *shell, int pipe_flag);
+
+// executor/execute_or.c
+void	execute_or(t_ast *node, t_shell *shell, int pipe_flag);
+
+// executor/execute_input_redir.c
+void	execute_input_redir(t_ast *node, t_shell *shell, int pipe_flag);
+void	set_input_redir(t_ast *node, int redir_file_fd);
+
+// executor/execute_heredoc_redir.c
+void	execute_heredoc_redir(t_ast *node, t_shell *shell, int pipe_flag);
+
+// executor/execute_output_redir.c
+void	execute_output_redir(t_ast *node, t_shell *shell, int pipe_flag);
+void	set_output_redir(t_ast *node, int redir_file_fd);
+
+// executor/execute_append_redir.c
+void	execute_append_redir(t_ast *node, t_shell *shell, int pipe_flag);
+
+// executor/execute_external_cmd.c
+void	execute_external_cmd(t_ast *node, t_shell *shell);
+
+// executor/make_envp_arr.c
+char	**make_envp_arr(t_list *env_list);
+
+// executor/find_cmd.c
+char	*find_cmd(char *cmd, t_shell *shell);
+
+// executor/get_child_exit_status.c
+int		get_child_exit_status(int status);
 
 #endif

@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   execute_append_redir.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/15 23:59:16 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/17 06:33:57 by younglee         ###   ########seoul.kr  */
+/*   Created: 2022/07/17 09:50:12 by younglee          #+#    #+#             */
+/*   Updated: 2022/07/17 10:04:45 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	executor(t_shell *shell)
+void	execute_append_redir(t_ast *node, t_shell *shell, int pipe_flag)
 {
-	open_heredoc(shell->ast, shell);
-	if (shell->status != SHELL_EXECUTOR)
+	char	*file_path;
+
+	file_path = node->right_child->argv[0];
+	node->redir_file_fd = open(file_path, APPEND_OPEN, 0644);
+	if (node->redir_file_fd == FAIL)
+	{
+		print_minishell_error(TRUE, file_path, strerror(errno));
 		return ;
-	execute_ast(shell->ast, shell, FALSE);
-	if (shell->status != SHELL_EXECUTOR)
-		return ;
-	free_ast(&shell->ast);
-	shell->status = SHELL_READLINE;
+	}
+	set_output_redir(node->left_child, node->redir_file_fd);
+	execute_ast(node->left_child, shell, pipe_flag);
+	my_close(&node->redir_file_fd);
 }

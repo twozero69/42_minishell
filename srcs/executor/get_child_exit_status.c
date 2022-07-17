@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   get_child_exit_status.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/15 23:59:16 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/17 06:33:57 by younglee         ###   ########seoul.kr  */
+/*   Created: 2022/07/17 06:19:14 by younglee          #+#    #+#             */
+/*   Updated: 2022/07/17 06:28:55 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	executor(t_shell *shell)
+int	get_child_exit_status(int status)
 {
-	open_heredoc(shell->ast, shell);
-	if (shell->status != SHELL_EXECUTOR)
-		return ;
-	execute_ast(shell->ast, shell, FALSE);
-	if (shell->status != SHELL_EXECUTOR)
-		return ;
-	free_ast(&shell->ast);
-	shell->status = SHELL_READLINE;
+	if (WIFEXITED(status) == TRUE)
+		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status) == TRUE)
+		return (WTERMSIG(status) + 128);
+	return (EXIT_FAILURE);
 }

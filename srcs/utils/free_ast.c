@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 02:58:55 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/16 01:16:41 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 10:19:40 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,21 @@ static void	free_argv(char ***argv_pt)
 	*argv_pt = NULL;
 }
 
-static void	close_pipe(int *pipe)
+void	close_pipe(int *pipe)
 {
 	my_close(&pipe[0]);
 	my_close(&pipe[1]);
+}
+
+static int	check_redir_node(enum e_ast type)
+{
+	if (type == NODE_INPUT_REDIR)
+		return (TRUE);
+	if (type == NODE_OUTPUT_REDIR)
+		return (TRUE);
+	if (type == NODE_APPEND_REDIR)
+		return (TRUE);
+	return (FALSE);
 }
 
 static void	free_ast_node(t_ast *node)
@@ -41,7 +52,10 @@ static void	free_ast_node(t_ast *node)
 	free_ast_node(node->left_child);
 	free_ast_node(node->right_child);
 	free_argv(&node->argv);
-	close_pipe(node->pipe);
+	if (node->type == NODE_PIPE || node->type == NODE_HEREDOC_REDIR)
+		close_pipe(node->pipe);
+	if (check_redir_node(node->type) == TRUE)
+		my_close(&node->redir_file_fd);
 	my_free((void **)&node);
 }
 

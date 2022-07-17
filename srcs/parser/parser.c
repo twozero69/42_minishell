@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 22:29:39 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/16 00:39:52 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/16 21:38:16 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ void	init_ast_node(t_ast *node)
 	ft_memset(node, 0, sizeof(t_ast));
 	node->pipe[0] = -1;
 	node->pipe[1] = -1;
+	node->cmd_in_fd = -1;
+	node->cmd_out_fd = -1;
+	node->redir_file_fd = -1;
 }
 
 static int	make_ast(t_shell *shell)
