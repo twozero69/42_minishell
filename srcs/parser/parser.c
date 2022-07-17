@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 22:29:39 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/17 11:42:09 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 19:41:23 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	parser(t_shell *shell)
 {
 	if (check_syntax(shell->token_list) == FALSE)
 	{
+		shell->status = SHELL_READLINE;
 		shell->exit_status = EXIT_SYNTEX_ERROR;
 		return ;
 	}
