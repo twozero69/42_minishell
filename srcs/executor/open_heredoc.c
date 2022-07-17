@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 01:42:59 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/17 11:37:20 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 18:29:48 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,12 @@ static void	write_heredoc(int entrance_fd, char *eof_str, t_shell *shell)
 			break ;
 		}
 		if (strncmp(line, eof_str, cmp_len) == 0)
+		{
+			free(line);
 			break ;
+		}
 		ft_putendl_fd(line, entrance_fd);
+		free(line);
 	}
 }
 

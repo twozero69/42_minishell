@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:25:16 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/17 11:39:03 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 18:31:14 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	shell;
 
 	init(argc, argv, envp, &shell);
-	while (shell.status == SHELL_READLINE && my_readline("$ ", &shell))
+	while (shell.status == SHELL_READLINE && my_readline("minishell$ ", &shell))
 	{
 		if (*shell.line != '\0')
 			add_history(shell.line);
