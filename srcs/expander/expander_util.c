@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 02:54:19 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/18 03:16:09 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/18 05:19:29 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,25 @@ int	get_lst_num(t_list *ret)
 	while (ret && ++len)
 		ret = ret->next;
 	return (len);
+}
+
+void	_swap_str(char **a, char **b)
+{
+	char	*x;
+
+	if (a == b)
+		return ;
+	x = *a;
+	*a = *b;
+	*b = x;
+}
+
+int	my_strcmp(const char *s1, char *s2)
+{
+	while (*s1 && *s2 && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }

@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 10:33:30 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/18 03:40:03 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/18 04:40:36 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	realloc_argv(char ***argv, t_list *ret)
 	temp = ret;
 	tda_free(*argv);
 	i = get_lst_num(ret);
-	*argv = (char **)calloc(i + 1, sizeof(char *));
+	*argv = (char **)ft_calloc(i + 1, sizeof(char *));
 	a = *argv;
 	while (ret)
 	{
@@ -86,6 +86,6 @@ void	expander(t_shell *shell)
 {
 	expander_start_lst(shell->ast, shell->env_list, 0);
 	// expander_start(shell->ast, shell->env_list, 0);
-	// system("leaks minishell");
+	system("leaks minishell");
 	shell->status = SHELL_EXECUTOR;
 }
