@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:25:16 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/17 11:24:34 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 11:39:03 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ int	main(int argc, char **argv, char **envp)
 	{
 		if (*shell.line != '\0')
 			add_history(shell.line);
-		if (shell.status == SHELL_LEXER && shell.line != NULL)
+		if (shell.status == SHELL_LEXER)
 			lexer(shell.line, &shell);
-		if (shell.status == SHELL_PARSER && shell.token_list != NULL)
+		if (shell.status == SHELL_PARSER)
 			parser(&shell);
-		if (shell.status == SHELL_EXPANDER && shell.ast != NULL)
+		if (shell.status == SHELL_EXPANDER)
 			expander(&shell);
-		if (shell.status == SHELL_EXECUTOR && shell.ast != NULL)
+		if (shell.status == SHELL_EXECUTOR)
 			executor(&shell);
 		reset_resources(&shell);
 	}

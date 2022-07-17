@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 10:33:30 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/17 11:18:53 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 11:38:31 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	expander_start(t_ast *node, t_list *env_list)
 {
 	int	i;
 
+	if (node == NULL)
+		return ;
 	i = 0;
 	while (node->argv != NULL && node->argv[i] != NULL)
 	{

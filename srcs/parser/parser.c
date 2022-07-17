@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 22:29:39 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/16 21:38:16 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 11:42:09 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	init_ast_node(t_ast *node)
 
 static int	make_ast(t_shell *shell)
 {
+	if (shell->token_list == NULL)
+		return (SUCCESS);
 	shell->ast = (t_ast *)malloc(sizeof(t_ast));
 	if (shell->ast == NULL)
 		return (FAIL);
