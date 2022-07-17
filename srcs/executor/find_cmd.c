@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 04:39:47 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/17 10:29:13 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 19:20:14 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,13 @@ static int	check_execute_posibility(char *path)
 	return (TRUE);
 }
 
-static char	*find_cmd_from_path(char *cmd, t_list *env_list)
+static char	*find_cmd_from_path(char *cmd, t_env *path_env)
 {
-	t_env	*path_env;
 	char	**path_split;
 	int		idx;
 	char	*term;
 	char	*path;
 
-	path_env = get_env_from_key("PATH", env_list);
-	if (path_env == NULL)
-		return (NULL);
 	path_split = ft_split(path_env->value, ':');
 	idx = 0;
 	while (path_split[idx] != NULL)
@@ -75,10 +71,13 @@ static void	exit_with_cmd_error(char *cmd, t_shell *shell)
 char	*find_cmd(char *cmd, t_shell *shell)
 {
 	char	*path;
+	t_env	*path_env;
 
-	if (ft_strchr(cmd, '/') == NULL)
+	path_env = get_env_from_key("PATH", shell->env_list);
+	if (path_env != NULL && path_env->value != NULL && \
+	*path_env->value != '\0' && ft_strchr(cmd, '/') == NULL)
 	{
-		path = find_cmd_from_path(cmd, shell->env_list);
+		path = find_cmd_from_path(cmd, path_env);
 		if (path == NULL)
 			exit_with_cmd_error(cmd, shell);
 		return (path);
