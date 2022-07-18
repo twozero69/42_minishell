@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 10:33:30 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/19 05:28:07 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/19 05:48:54 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	expander_start_lst(t_ast *node, t_list *env_list, int depth)
 	i = 0;
 	while (node->argv != NULL && node->argv[i] != NULL)
 	{
-		printf("before expander : [%s]\n", node->argv[i]);
 		ret = ft_lstnew((char *)ft_calloc(1, sizeof(char)));
 		set_expander_lst(node->argv[i], env_list, ret);
 		if (i == 0)
@@ -63,8 +62,6 @@ void	expander_start_lst(t_ast *node, t_list *env_list, int depth)
 	i = 0;
 	if (node->argv != NULL && node->argv[i] != NULL)
 		realloc_argv_hook(&node->argv, all);
-	while (node->argv != NULL && node->argv[i] != NULL)
-		printf("after  expander : [%s]\n", node->argv[i++]);
 	if (node->left_child != NULL)
 		expander_start_lst(node->left_child, env_list, depth + 1);
 	if (node->right_child != NULL)
@@ -94,6 +91,5 @@ void	expander(t_shell *shell)
 	g_exit_status = shell->exit_status;
 	if (shell->ast != NULL)
 		expander_start_lst(shell->ast, shell->env_list, 0);
-	system("leaks minishell");
 	shell->status = SHELL_EXECUTOR;
 }
