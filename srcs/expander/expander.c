@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 10:33:30 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/18 21:57:01 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/19 05:48:54 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ void	realloc_argv(char ***argv, t_list *ret)
 	temp = ret;
 	tda_free(*argv);
 	i = get_lst_num(ret);
-	*argv = (char **)ft_calloc(i + 1, sizeof(char *));
+	*argv = (char **)ft_calloc(i, sizeof(char *));
 	a = *argv;
+	ret = ret->next;
 	while (ret)
 	{
 		**argv = ft_strdup(ret->content);
@@ -31,6 +32,14 @@ void	realloc_argv(char ***argv, t_list *ret)
 	}
 	ft_lstclear(&temp, free);
 	*argv = a;
+}
+
+void	realloc_argv_hook(char ***argv, t_list *ret)
+{
+	t_list	*temp;
+
+	temp = wilcard_match(ret);
+	realloc_argv(argv, temp);
 }
 
 void	expander_start_lst(t_ast *node, t_list *env_list, int depth)
@@ -52,7 +61,7 @@ void	expander_start_lst(t_ast *node, t_list *env_list, int depth)
 	}
 	i = 0;
 	if (node->argv != NULL && node->argv[i] != NULL)
-		realloc_argv(&node->argv, all);
+		realloc_argv_hook(&node->argv, all);
 	if (node->left_child != NULL)
 		expander_start_lst(node->left_child, env_list, depth + 1);
 	if (node->right_child != NULL)
@@ -80,6 +89,7 @@ void	expander_start(t_ast *node, t_list *env_list, int depth)
 void	expander(t_shell *shell)
 {
 	g_exit_status = shell->exit_status;
-	expander_start_lst(shell->ast, shell->env_list, 0);
+	if (shell->ast != NULL)
+		expander_start_lst(shell->ast, shell->env_list, 0);
 	shell->status = SHELL_EXECUTOR;
 }
