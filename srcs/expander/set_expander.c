@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 00:08:11 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/15 21:45:44 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/17 03:12:40 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_env_set_envp(char *env_temp, char *result)
 		}
 		else
 		{
-			result = my_append_char(result, env_temp[j]);
+			find_wilcard(env_temp, &result, j);
 			j++;
 		}
 	}
@@ -54,10 +54,9 @@ int	when_other(char *arg, t_list *env_list, char **result, int i)
 		else
 			*result = my_append_char(*result, '$');
 		if (env_temp != NULL)
-		{
 			*result = get_env_set_envp(env_temp->value, *result);
+		if (env_temp != NULL)
 			free(env_name);
-		}
 	}
 	else
 		find_wilcard(arg, result, i++);

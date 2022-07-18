@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/18 20:57:43 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/18 21:24:30 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ typedef struct s_shell
 	int				heredoc_line_count;
 }	t_shell;
 
+int		g_exit_status;
+
 // utils/exit_with_custom_error.c
 void	exit_with_custom_error(char *error_msg, t_shell *shell);
 
@@ -184,6 +186,12 @@ int		set_shlvl(t_shell *shell);
 
 // utils/my_append_char.c
 char	*my_append_char(char *before, char c);
+
+// utils/my_append_char_lst.c
+void	my_append_char_lst(t_list *lst, char c);
+
+// utils/my_append_str_lst.c
+void	my_append_str_lst(t_list *lst, char *str);
 
 // lexer/lexer.c
 void	lexer(char *line, t_shell *shell);
@@ -281,8 +289,14 @@ int		check_builtin(char **argv);
 void	execute_builtin(char **argv, t_shell *shell);
 
 // expander/expander.c
+void	tda_free(char **tda);
+int		get_lst_num(t_list *ret);
+void	_swap_str(char **a, char **b);
+int		my_strcmp(const char *s1, char *s2);
 void	expander(t_shell *shell);
+void	find_wilcard_lst(char *argv, t_list *ret, int i);
 void	find_wilcard(char *argv, char **result, int i);
+void	set_expander_lst(char *argv, t_list *env_list, t_list *ret);
 char	*set_expander(char *argv, t_list *env_list);
 
 // executor/executor.c
