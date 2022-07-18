@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_with_clib_error.c                             :+:      :+:    :+:   */
+/*   get_child_exit_status.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/03 16:06:28 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/18 18:36:34 by younglee         ###   ########seoul.kr  */
+/*   Created: 2022/07/17 06:19:14 by younglee          #+#    #+#             */
+/*   Updated: 2022/07/17 06:28:55 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_with_clib_error(char *error_msg, t_shell *shell)
+int	get_child_exit_status(int status)
 {
-	print_minishell_error(TRUE, error_msg, strerror(errno));
-	free_resources(shell);
-	exit(EXIT_FAILURE);
+	if (WIFEXITED(status) == TRUE)
+		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status) == TRUE)
+		return (WTERMSIG(status) + 128);
+	return (EXIT_FAILURE);
 }

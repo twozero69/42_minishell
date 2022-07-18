@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 10:33:30 by jubae             #+#    #+#             */
 /*   Updated: 2022/07/18 21:28:26 by jubae            ###   ########.fr       */
@@ -63,6 +63,8 @@ void	expander_start(t_ast *node, t_list *env_list, int depth)
 {
 	int	i;
 
+	if (node == NULL)
+		return ;
 	i = 0;
 	while (node->argv != NULL && node->argv[i] != NULL)
 	{
@@ -70,9 +72,9 @@ void	expander_start(t_ast *node, t_list *env_list, int depth)
 		i++;
 	}
 	if (node->left_child != NULL)
-		expander_start(node->left_child, env_list, depth + 1);
+		expander_start(node->left_child, env_list);
 	if (node->right_child != NULL)
-		expander_start(node->right_child, env_list, depth + 1);
+		expander_start(node->right_child, env_list);
 }
 
 void	expander(t_shell *shell)

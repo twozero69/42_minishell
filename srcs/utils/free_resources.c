@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 10:13:42 by younglee          #+#    #+#             */
-/*   Updated: 2022/06/30 02:58:46 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 10:30:33 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	free_resources(t_shell *shell)
 {
 	my_close(&shell->stdin_fd);
 	my_close(&shell->stdout_fd);
-	my_close(&shell->stderr_fd);
 	my_free((void **)&shell->line);
 	free_env_list(&shell->env_list);
 	free_token_list(&shell->token_list);

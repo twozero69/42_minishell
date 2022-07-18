@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 22:49:09 by younglee          #+#    #+#             */
-/*   Updated: 2022/06/28 02:00:18 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 11:41:07 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ static int	check_last_token(t_list *token_list)
 
 int	check_syntax(t_list *token_list)
 {
+	if (token_list == NULL)
+		return (TRUE);
 	if (check_parenthesis(token_list) == FALSE)
 		return (FALSE);
 	if (check_first_token(token_list) == FALSE)

@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+         #
+#    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
 #    Updated: 2022/07/18 21:21:32 by jubae            ###   ########.fr        #
@@ -58,13 +58,30 @@ SRCS			= srcs/main.c \
 				srcs/builtin/builtin_unset.c \
 				srcs/builtin/builtin_cd.c \
 				srcs/builtin/builtin_cd_utils.c \
+				srcs/builtin/execute_builtin.c \
 				srcs/builtin/builtin_executor.c \
 				srcs/expander/expander_util.c \
 				srcs/expander/expander.c \
 				srcs/expander/find_wilcard_lst.c \
 				srcs/expander/find_wilcard.c \
-				srcs/expander/set_expander_lst.c \
-				srcs/expander/set_expander.c
+        srcs/expander/set_expander_lst.c \
+        srcs/expander/set_expander.c \
+				srcs/executor/executor.c \
+				srcs/executor/open_heredoc.c \
+				srcs/executor/execute_ast.c \
+				srcs/executor/execute_cmd.c \
+				srcs/executor/execute_pipe.c \
+				srcs/executor/execute_and.c \
+				srcs/executor/execute_or.c \
+				srcs/executor/execute_input_redir.c \
+				srcs/executor/execute_heredoc_redir.c \
+				srcs/executor/execute_output_redir.c \
+				srcs/executor/execute_append_redir.c \
+				srcs/executor/execute_external_cmd.c \
+				srcs/executor/make_envp_arr.c \
+				srcs/executor/find_cmd.c \
+				srcs/executor/find_cmd_utils.c \
+				srcs/executor/get_child_exit_status.c
 OBJS			= ${SRCS:.c=.o}
 INC				= -I./includes
 LIBFT			= -L./libft -lft

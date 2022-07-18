@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_with_clib_error.c                             :+:      :+:    :+:   */
+/*   execute_external_cmd.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/03 16:06:28 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/18 18:36:34 by younglee         ###   ########seoul.kr  */
+/*   Created: 2022/07/16 22:14:54 by younglee          #+#    #+#             */
+/*   Updated: 2022/07/18 21:26:25 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_with_clib_error(char *error_msg, t_shell *shell)
+void	execute_external_cmd(t_ast *node, t_shell *shell)
 {
-	print_minishell_error(TRUE, error_msg, strerror(errno));
+	char	*path;
+	char	**envp;
+	char	**argv;
+
+	errno = 0;
+	path = find_cmd(node->argv[0], shell);
+	envp = make_envp_arr(shell->env_list);
+	argv = node->argv;
+	node->argv = NULL;
+	set_redir(node, shell);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	free_resources(shell);
-	exit(EXIT_FAILURE);
+	execve(path, argv, envp);
+	exit(EXIT_SUCCESS);
 }

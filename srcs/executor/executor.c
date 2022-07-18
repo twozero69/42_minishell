@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_with_clib_error.c                             :+:      :+:    :+:   */
+/*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/03 16:06:28 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/18 18:36:34 by younglee         ###   ########seoul.kr  */
+/*   Created: 2022/07/15 23:59:16 by younglee          #+#    #+#             */
+/*   Updated: 2022/07/17 11:37:25 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_with_clib_error(char *error_msg, t_shell *shell)
+void	executor(t_shell *shell)
 {
-	print_minishell_error(TRUE, error_msg, strerror(errno));
-	free_resources(shell);
-	exit(EXIT_FAILURE);
+	open_heredoc(shell->ast, shell);
+	if (shell->status != SHELL_EXECUTOR)
+		return ;
+	execute_ast(shell->ast, shell, FALSE);
+	if (shell->status != SHELL_EXECUTOR)
+		return ;
+	free_ast(&shell->ast);
+	shell->status = SHELL_READLINE;
 }

@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 20:54:38 by younglee          #+#    #+#             */
-/*   Updated: 2022/06/30 04:56:59 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/18 20:04:16 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	make_cmd_node(t_list *token_list, t_ast *node)
 	t_token	*token;
 
 	cmd_token_num = get_cmd_token_num(token_list);
+	if (cmd_token_num == 0)
+		return (SUCCESS);
 	node->argv = (char **)malloc((cmd_token_num + 1) * sizeof(char *));
 	if (node->argv == NULL)
 		return (FAIL);

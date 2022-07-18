@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   find_wilcard.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 16:59:29 by jubae             #+#    #+#             */
 /*   Updated: 2022/07/16 01:06:05 by jubae            ###   ########.fr       */
@@ -38,7 +38,7 @@ char	*get_wilcard(int init, char *path)
 	char			*ret;
 	char			*temp;
 
-	ret = (void *)(uintptr_t)(0);
+	ret = NULL;
 	if (!dir)
 		return (NULL);
 	ent = readdir(dir);

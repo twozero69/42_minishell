@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 10:20:47 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/06 05:42:18 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/17 11:21:44 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,13 @@ void	init(int argc, char **argv, char **envp, t_shell *shell)
 	ft_memset(shell, 0, sizeof(t_shell));
 	shell->stdin_fd = -1;
 	shell->stdout_fd = -1;
-	shell->stderr_fd = -1;
 	shell->status = SHELL_READLINE;
+	shell->heredoc_line_count = 0;
 	if (argc != 1 || argv == NULL || envp == NULL)
 		exit_with_custom_error("argument error", shell);
 	my_dup(&shell->stdin_fd, STDIN_FILENO, shell);
 	my_dup(&shell->stdout_fd, STDOUT_FILENO, shell);
-	my_dup(&shell->stderr_fd, STDERR_FILENO, shell);
 	init_env_list(envp, shell);
 	if (set_shlvl(shell))
 		exit_with_clib_error("init.c: malloc", shell);
-	signal(SIGQUIT, SIG_IGN);
 }
