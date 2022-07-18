@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/19 04:30:04 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/19 05:46:10 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,21 +288,37 @@ void	print_dir_error(char *dir);
 int		check_builtin(char **argv);
 void	execute_builtin(char **argv, t_shell *shell);
 
-// expander/expander.c
+// expander/expander_util.c
 void	tda_free(char **tda);
 int		get_lst_num(t_list *ret);
 void	_swap_str(char **a, char **b);
 int		my_strcmp(const char *s1, char *s2);
-void	expander(t_shell *shell);
-void	find_wilcard_lst(char *argv, t_list *ret, int i);
-void	find_wilcard(char *argv, char **result, int i);
-void	set_expander_lst(char *argv, t_list *env_list, t_list *ret);
-char	*set_expander(char *argv, t_list *env_list);
-int		get_wilcard_lst_cnt(char *path);
-void	get_wilcard_char(char **sort, char *path);
 
-// expander/wilcard_match.c   
-t_list  *wilcard_match(t_list *lst);
+// expander/expander.c
+void	expander(t_shell *shell);
+
+// expander/find_wilcard_lst.c
+void	find_wilcard_lst(char *argv, t_list *ret, int i);
+
+// expander/find_wilcard.c
+void	find_wilcard(char *argv, char **result, int i);
+
+// expander/find_wilcard_lst.c
+void	get_wilcard_char(char **sort, char *path);
+int		get_wilcard_lst_cnt(char *path);
+void	set_expander_lst(char *argv, t_list *env_list, t_list *ret);
+
+// expander/find_wilcard.c
+char	*set_expander(char *argv, t_list *env_list);
+
+// expander/wilcard_match.c
+t_list	*wilcard_match(t_list *lst);
+
+// expander/wilcard_util.c
+void	wilcard_sort_util(char **s, int c, int (*m)(const char *, char *));
+
+// expander/wilcard_util.c
+char	*subst_util(char *str, char from, char to);
 
 // executor/executor.c
 void	executor(t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 10:33:30 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/19 04:38:53 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/19 05:28:07 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	realloc_argv(char ***argv, t_list *ret)
 
 void	realloc_argv_hook(char ***argv, t_list *ret)
 {
-	t_list *temp;
+	t_list	*temp;
+
 	temp = wilcard_match(ret);
 	realloc_argv(argv, temp);
 }
@@ -61,7 +62,6 @@ void	expander_start_lst(t_ast *node, t_list *env_list, int depth)
 	}
 	i = 0;
 	if (node->argv != NULL && node->argv[i] != NULL)
-		// realloc_argv(&node->argv, all);
 		realloc_argv_hook(&node->argv, all);
 	while (node->argv != NULL && node->argv[i] != NULL)
 		printf("after  expander : [%s]\n", node->argv[i++]);
@@ -92,7 +92,7 @@ void	expander_start(t_ast *node, t_list *env_list, int depth)
 void	expander(t_shell *shell)
 {
 	g_exit_status = shell->exit_status;
-	if(shell->ast != NULL)
+	if (shell->ast != NULL)
 		expander_start_lst(shell->ast, shell->env_list, 0);
 	system("leaks minishell");
 	shell->status = SHELL_EXECUTOR;

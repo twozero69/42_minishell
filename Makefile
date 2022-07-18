@@ -6,7 +6,7 @@
 #    By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/07/19 01:41:36 by jubae            ###   ########.fr        #
+#    Updated: 2022/07/19 05:33:07 by jubae            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ SRCS			= srcs/main.c \
         		srcs/expander/set_expander_lst.c \
         		srcs/expander/set_expander.c \
 				srcs/expander/wilcard_match.c \
+				srcs/expander/wilcard_util.c \
 				srcs/executor/executor.c \
 				srcs/executor/open_heredoc.c \
 				srcs/executor/execute_ast.c \
