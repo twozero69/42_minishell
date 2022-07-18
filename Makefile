@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
+#    By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/07/18 21:21:32 by jubae            ###   ########.fr        #
+#    Updated: 2022/07/18 22:00:18 by jubae            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,13 +59,12 @@ SRCS			= srcs/main.c \
 				srcs/builtin/builtin_cd.c \
 				srcs/builtin/builtin_cd_utils.c \
 				srcs/builtin/execute_builtin.c \
-				srcs/builtin/builtin_executor.c \
 				srcs/expander/expander_util.c \
 				srcs/expander/expander.c \
 				srcs/expander/find_wilcard_lst.c \
 				srcs/expander/find_wilcard.c \
-        srcs/expander/set_expander_lst.c \
-        srcs/expander/set_expander.c \
+        		srcs/expander/set_expander_lst.c \
+        		srcs/expander/set_expander.c \
 				srcs/executor/executor.c \
 				srcs/executor/open_heredoc.c \
 				srcs/executor/execute_ast.c \
