@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 20:54:12 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/18 20:54:33 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/18 22:48:19 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	exit_with_permission_error(char *cmd, t_shell *shell)
 {
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
 	ft_putendl_fd(": Permission denied", STDERR_FILENO);
 	free_resources(shell);
