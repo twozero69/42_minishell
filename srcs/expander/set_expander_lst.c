@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 00:08:11 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/18 03:16:43 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/18 21:25:50 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	when_other_lst(char *argv, t_list *env_list, t_list *ret, int i)
 
 	if (argv[i] == '$')
 		if (argv[i + 1] == '?' && ++i && i++)
-			my_append_char_lst(ret, '0');
+			my_append_str_lst(ret, ft_itoa(g_exit_status));
 	else
 	{
 		env_name = NULL;
@@ -53,10 +53,9 @@ int	when_other_lst(char *argv, t_list *env_list, t_list *ret, int i)
 		else
 			my_append_char_lst(ret, '$');
 		if (env_temp != NULL)
-		{
 			get_env_set_envp_lst(env_temp->value, ret);
+		if (env_name != NULL)
 			free(env_name);
-		}
 	}
 	else
 		find_wilcard_lst(argv, ret, i++);

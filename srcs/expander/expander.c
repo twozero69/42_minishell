@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 10:33:30 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/18 04:40:36 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/18 21:18:37 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	expander_start(t_ast *node, t_list *env_list, int depth)
 
 void	expander(t_shell *shell)
 {
+	g_exit_status = shell->exit_status;
 	expander_start_lst(shell->ast, shell->env_list, 0);
 	// expander_start(shell->ast, shell->env_list, 0);
 	system("leaks minishell");
