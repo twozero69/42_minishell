@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/17 19:33:18 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/18 20:57:43 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@
 # endif
 
 // cmd exit status
+# define EXIT_NO_SUCH_FILE 1
+# define EXIT_PERMISSION_DENIED 126
 # define EXIT_CMD_COMMAND_NOT_FOUND 127
 
 // file open option
@@ -327,6 +329,10 @@ char	**make_envp_arr(t_list *env_list);
 
 // executor/find_cmd.c
 char	*find_cmd(char *cmd, t_shell *shell);
+
+// executor/find_cmd_utils.c
+void	exit_with_cmd_error(char *cmd, t_shell *shell, int file_exist_flag);
+void	exit_with_file_error(char *cmd, t_shell *shell, int file_exist_flag);
 
 // executor/get_child_exit_status.c
 int		get_child_exit_status(int status);

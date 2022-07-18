@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 04:39:47 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/17 19:20:14 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/18 21:00:06 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,19 @@ static void	free_split_arr(char **split_arr)
 	free(split_arr);
 }
 
-static int	check_execute_posibility(char *path)
+static int	check_execute_posibility(char *path, int *file_exist_flag)
 {
 	struct stat	stat_buf;
 
-	stat(path, &stat_buf);
+	if (stat(path, &stat_buf) == FAIL)
+		return (FALSE);
+	*file_exist_flag = TRUE;
 	if ((stat_buf.st_mode & S_IXUSR) == 0)
 		return (FALSE);
 	return (TRUE);
 }
 
-static char	*find_cmd_from_path(char *cmd, t_env *path_env)
+static char	*find_cmd_from_path(char *cmd, t_env *path_env, int *file_flag)
 {
 	char	**path_split;
 	int		idx;
@@ -51,7 +53,7 @@ static char	*find_cmd_from_path(char *cmd, t_env *path_env)
 		term = ft_strjoin(path_split[idx], "/");
 		path = ft_strjoin(term, cmd);
 		free(term);
-		if (check_execute_posibility(path) == TRUE)
+		if (check_execute_posibility(path, file_flag) == TRUE)
 			return (path);
 		free(path);
 		idx++;
@@ -60,32 +62,26 @@ static char	*find_cmd_from_path(char *cmd, t_env *path_env)
 	return (NULL);
 }
 
-static void	exit_with_cmd_error(char *cmd, t_shell *shell)
-{
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putendl_fd(": command not found", STDERR_FILENO);
-	free_resources(shell);
-	exit(EXIT_CMD_COMMAND_NOT_FOUND);
-}
-
 char	*find_cmd(char *cmd, t_shell *shell)
 {
 	char	*path;
 	t_env	*path_env;
+	int		file_exist_flag;
 
+	file_exist_flag = FALSE;
 	path_env = get_env_from_key("PATH", shell->env_list);
 	if (path_env != NULL && path_env->value != NULL && \
 	*path_env->value != '\0' && ft_strchr(cmd, '/') == NULL)
 	{
-		path = find_cmd_from_path(cmd, path_env);
+		path = find_cmd_from_path(cmd, path_env, &file_exist_flag);
 		if (path == NULL)
-			exit_with_cmd_error(cmd, shell);
+			exit_with_cmd_error(cmd, shell, file_exist_flag);
 		return (path);
 	}
 	else
 	{
-		if (check_execute_posibility(cmd) == FALSE)
-			exit_with_clib_error(cmd, shell);
+		if (check_execute_posibility(cmd, &file_exist_flag) == FALSE)
+			exit_with_file_error(cmd, shell, file_exist_flag);
 		return (cmd);
 	}
 }

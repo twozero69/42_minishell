@@ -6,7 +6,7 @@
 #    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/07/17 10:22:52 by younglee         ###   ########seoul.kr   #
+#    Updated: 2022/07/18 20:58:00 by younglee         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ SRCS			= srcs/main.c \
 				srcs/executor/execute_external_cmd.c \
 				srcs/executor/make_envp_arr.c \
 				srcs/executor/find_cmd.c \
+				srcs/executor/find_cmd_utils.c \
 				srcs/executor/get_child_exit_status.c
 OBJS			= ${SRCS:.c=.o}
 INC				= -I./includes
