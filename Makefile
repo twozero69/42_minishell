@@ -6,7 +6,7 @@
 #    By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/07/18 02:56:02 by jubae            ###   ########.fr        #
+#    Updated: 2022/07/18 21:21:32 by jubae            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS			= srcs/main.c \
 				srcs/utils/set_shlvl.c \
 				srcs/utils/my_append_char.c \
 				srcs/utils/my_append_char_lst.c \
+				srcs/utils/my_append_str_lst.c \
 				srcs/lexer/lexer.c \
 				srcs/lexer/check_char.c \
 				srcs/lexer/add_new_token.c \

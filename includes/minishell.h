@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/18 05:19:39 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/18 21:24:30 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ typedef struct s_shell
 	t_ast			*ast;
 }	t_shell;
 
+int		g_exit_status;
+
 // utils/exit_with_custom_error.c
 void	exit_with_custom_error(char *error_msg, t_shell *shell);
 
@@ -165,6 +167,9 @@ char	*my_append_char(char *before, char c);
 
 // utils/my_append_char_lst.c
 void	my_append_char_lst(t_list *lst, char c);
+
+// utils/my_append_str_lst.c
+void	my_append_str_lst(t_list *lst, char *str);
 
 // lexer/lexer.c
 void	lexer(char *line, t_shell *shell);
