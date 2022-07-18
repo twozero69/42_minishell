@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 16:59:29 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/18 05:19:18 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/19 05:20:57 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,26 +98,9 @@ void	wilcard_sort(char **s, int c, int (*m)(const char *, char *), t_list *t)
 }
 
 void	find_wilcard_lst(char *argv, t_list *ret, int i)
-{	
-	char	*temp1;
-	int		cnt;
-	char	**sort;
-
-	if (is_wilcard_lst(argv, i))
-	{
-		temp1 = getcwd(NULL, 0);
-		cnt = get_wilcard_lst_cnt(temp1);
-		if (cnt == 0)
-			my_append_char_lst(ret, '*');
-		else
-		{
-			sort = (char **)ft_calloc(cnt + 1, sizeof(char *));
-			get_wilcard_char(sort, temp1);
-			wilcard_sort(sort, cnt, my_strcmp, ret);
-			tda_free(sort);
-		}
-		free(temp1);
-	}
+{
+	if (argv[i] == '*')
+		my_append_char_lst(ret, '\001');
 	else
 		my_append_char_lst(ret, argv[i]);
 }

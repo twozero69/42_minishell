@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/18 21:24:30 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/19 04:30:04 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,6 +298,11 @@ void	find_wilcard_lst(char *argv, t_list *ret, int i);
 void	find_wilcard(char *argv, char **result, int i);
 void	set_expander_lst(char *argv, t_list *env_list, t_list *ret);
 char	*set_expander(char *argv, t_list *env_list);
+int		get_wilcard_lst_cnt(char *path);
+void	get_wilcard_char(char **sort, char *path);
+
+// expander/wilcard_match.c   
+t_list  *wilcard_match(t_list *lst);
 
 // executor/executor.c
 void	executor(t_shell *shell);
