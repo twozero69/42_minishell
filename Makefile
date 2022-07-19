@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+         #
+#    By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:39:41 by younglee          #+#    #+#              #
-#    Updated: 2022/07/19 05:33:07 by jubae            ###   ########.fr        #
+#    Updated: 2022/07/19 17:55:57 by younglee         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,8 +63,8 @@ SRCS			= srcs/main.c \
 				srcs/expander/expander.c \
 				srcs/expander/find_wilcard_lst.c \
 				srcs/expander/find_wilcard.c \
-        		srcs/expander/set_expander_lst.c \
-        		srcs/expander/set_expander.c \
+				srcs/expander/set_expander_lst.c \
+				srcs/expander/set_expander.c \
 				srcs/expander/wilcard_match.c \
 				srcs/expander/wilcard_util.c \
 				srcs/executor/executor.c \
