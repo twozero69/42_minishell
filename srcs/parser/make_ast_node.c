@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 01:58:12 by younglee          #+#    #+#             */
-/*   Updated: 2022/06/30 04:36:44 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/19 17:24:50 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	make_ast_node(t_list *token_list, t_ast *node)
 {
 	t_list		*junction;
 
+	if (token_list == NULL)
+		return (SUCCESS);
 	if (check_wrapped(token_list) == TRUE)
 		return (make_ast_node(token_list->next, node));
 	if (find_control_operator(token_list, &junction, &node->type) == TRUE)
