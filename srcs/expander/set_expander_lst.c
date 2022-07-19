@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 00:08:11 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/18 21:25:50 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/19 09:20:43 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ void	get_env_set_envp_lst(char *env_temp, t_list *ret)
 	}
 }
 
-int	when_other_lst(char *argv, t_list *env_list, t_list *ret, int i)
+int	when_other_lst(char *argv, t_shell *shell, t_list *ret, int i)
 {
 	char	*env_name;
 	t_env	*env_temp;
 
 	if (argv[i] == '$')
 		if (argv[i + 1] == '?' && ++i && i++)
-			my_append_str_lst(ret, ft_itoa(g_exit_status));
+			my_append_str_lst(ret, ft_itoa(shell->exit_status));
 	else
 	{
 		env_name = NULL;
@@ -49,7 +49,7 @@ int	when_other_lst(char *argv, t_list *env_list, t_list *ret, int i)
 		while (!ft_strchr(" \t\n$\"\'\\/", argv[++i]))
 			env_name = my_append_char(env_name, argv[i]);
 		if (env_name != NULL)
-			env_temp = get_env_from_key(env_name, env_list);
+			env_temp = get_env_from_key(env_name, shell->env_list);
 		else
 			my_append_char_lst(ret, '$');
 		if (env_temp != NULL)
@@ -62,7 +62,7 @@ int	when_other_lst(char *argv, t_list *env_list, t_list *ret, int i)
 	return (i);
 }
 
-int	when_dquote_env_lst(char *argv, t_list *env_list, t_list *ret, int i)
+int	when_dquote_env_lst(char *argv, t_shell *shell, t_list *ret, int i)
 {
 	char	*env_name;
 	char	*temp;
@@ -77,7 +77,7 @@ int	when_dquote_env_lst(char *argv, t_list *env_list, t_list *ret, int i)
 		while (!ft_strchr(" \t\n$\"\'\\/", argv[++i]))
 			env_name = my_append_char(env_name, argv[i]);
 		if (env_name != NULL)
-			env_temp = get_env_from_key(env_name, env_list);
+			env_temp = get_env_from_key(env_name, shell->env_list);
 		else
 			my_append_char_lst(ret, '$');
 		if (env_temp != NULL)
@@ -91,9 +91,8 @@ int	when_dquote_env_lst(char *argv, t_list *env_list, t_list *ret, int i)
 	return (i);
 }
 
-int	when_dquote_lst(char *argv, t_list *env_list, t_list *ret, int i)
+int	when_dquote_lst(char *argv, t_shell *shell, t_list *ret, int i)
 {
-	(void)env_list;
 	i++;
 	while (argv[i] != '\"')
 	{
@@ -107,7 +106,7 @@ int	when_dquote_lst(char *argv, t_list *env_list, t_list *ret, int i)
 			i++;
 		}
 		else if (argv[i] == '$')
-			i = when_dquote_env_lst(argv, env_list, ret, i);
+			i = when_dquote_env_lst(argv, shell, ret, i);
 		else
 			my_append_char_lst(ret, argv[i++]);
 	}
@@ -115,7 +114,7 @@ int	when_dquote_lst(char *argv, t_list *env_list, t_list *ret, int i)
 	return (i);
 }
 
-void	set_expander_lst(char *argv, t_list *env_list, t_list *ret)
+void	set_expander_lst(char *argv, t_shell *shell, t_list *ret)
 {
 	int		i;
 
@@ -126,9 +125,8 @@ void	set_expander_lst(char *argv, t_list *env_list, t_list *ret)
 			while (argv[i++] != '\'')
 				my_append_char_lst(ret, argv[i - 1]);
 		else if (argv[i] == '\"')
-			i = when_dquote_lst(argv, env_list, ret, i);
+			i = when_dquote_lst(argv, shell, ret, i);
 		else
-			i = when_other_lst(argv, env_list, ret, i);
-		(void)env_list;
+			i = when_other_lst(argv, shell, ret, i);
 	}
 }

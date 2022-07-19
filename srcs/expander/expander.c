@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 10:33:30 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/18 21:57:01 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/19 09:24:44 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ void	realloc_argv(char ***argv, t_list *ret)
 	temp = ret;
 	tda_free(*argv);
 	i = get_lst_num(ret);
-	*argv = (char **)ft_calloc(i + 1, sizeof(char *));
+	*argv = (char **)ft_calloc(i, sizeof(char *));
 	a = *argv;
+	ret = ret->next;
 	while (ret)
 	{
 		**argv = ft_strdup(ret->content);
@@ -33,7 +34,15 @@ void	realloc_argv(char ***argv, t_list *ret)
 	*argv = a;
 }
 
-void	expander_start_lst(t_ast *node, t_list *env_list, int depth)
+void	realloc_argv_hook(char ***argv, t_list *ret)
+{
+	t_list	*temp;
+
+	temp = wilcard_match(ret);
+	realloc_argv(argv, temp);
+}
+
+void	expander_start_lst(t_ast *node, t_shell *shell, int depth)
 {
 	int		i;
 	t_list	*ret;
@@ -43,7 +52,7 @@ void	expander_start_lst(t_ast *node, t_list *env_list, int depth)
 	while (node->argv != NULL && node->argv[i] != NULL)
 	{
 		ret = ft_lstnew((char *)ft_calloc(1, sizeof(char)));
-		set_expander_lst(node->argv[i], env_list, ret);
+		set_expander_lst(node->argv[i], shell, ret);
 		if (i == 0)
 			all = ret;
 		else
@@ -52,11 +61,11 @@ void	expander_start_lst(t_ast *node, t_list *env_list, int depth)
 	}
 	i = 0;
 	if (node->argv != NULL && node->argv[i] != NULL)
-		realloc_argv(&node->argv, all);
+		realloc_argv_hook(&node->argv, all);
 	if (node->left_child != NULL)
-		expander_start_lst(node->left_child, env_list, depth + 1);
+		expander_start_lst(node->left_child, shell, depth + 1);
 	if (node->right_child != NULL)
-		expander_start_lst(node->right_child, env_list, depth + 1);
+		expander_start_lst(node->right_child, shell, depth + 1);
 }
 
 void	expander_start(t_ast *node, t_list *env_list, int depth)
@@ -79,7 +88,7 @@ void	expander_start(t_ast *node, t_list *env_list, int depth)
 
 void	expander(t_shell *shell)
 {
-	g_exit_status = shell->exit_status;
-	expander_start_lst(shell->ast, shell->env_list, 0);
+	if (shell->ast != NULL)
+		expander_start_lst(shell->ast, shell, 0);
 	shell->status = SHELL_EXECUTOR;
 }
