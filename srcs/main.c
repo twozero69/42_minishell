@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:25:16 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/18 21:31:38 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/18 22:54:05 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,5 @@ int	main(int argc, char **argv, char **envp)
 		reset_resources(&shell);
 	}
 	free_resources(&shell);
-	return (EXIT_SUCCESS);
+	return (shell.exit_status);
 }
