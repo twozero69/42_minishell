@@ -6,7 +6,7 @@
 /*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/19 05:46:10 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/19 09:21:21 by jubae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,6 @@ typedef struct s_shell
 	t_ast			*ast;
 	int				heredoc_line_count;
 }	t_shell;
-
-int		g_exit_status;
 
 // utils/exit_with_custom_error.c
 void	exit_with_custom_error(char *error_msg, t_shell *shell);
@@ -306,7 +304,7 @@ void	find_wilcard(char *argv, char **result, int i);
 // expander/find_wilcard_lst.c
 void	get_wilcard_char(char **sort, char *path);
 int		get_wilcard_lst_cnt(char *path);
-void	set_expander_lst(char *argv, t_list *env_list, t_list *ret);
+void	set_expander_lst(char *argv, t_shell *shell, t_list *ret);
 
 // expander/find_wilcard.c
 char	*set_expander(char *argv, t_list *env_list);
