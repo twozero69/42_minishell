@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 01:42:59 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/18 19:32:33 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/21 18:10:24 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@ static void	write_heredoc(int entrance_fd, char *eof_str, t_shell *shell)
 	}
 }
 
+static void	set_heredoc_signal(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
+}
+
 void	open_heredoc(t_ast *node, t_shell *shell)
 {
 	pid_t	pid;
@@ -62,7 +68,7 @@ void	open_heredoc(t_ast *node, t_shell *shell)
 			exit_with_clib_error("executor.c: fork", shell);
 		if (pid == 0)
 		{
-			signal(SIGINT, SIG_DFL);
+			set_heredoc_signal();
 			write_heredoc(node->pipe[1], node->right_child->argv[0], shell);
 			free_resources(shell);
 			exit(EXIT_SUCCESS);

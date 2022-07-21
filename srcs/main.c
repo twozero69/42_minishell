@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:25:16 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/18 22:54:05 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/21 17:59:55 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,15 @@ static void	readline_signal_handler(int signo)
 	}
 }
 
-static void	wait_exec_signal_handler(int signo)
+static void	set_readline_signal(void)
 {
-	if (signo == SIGINT)
-		ft_putchar_fd('\n', STDERR_FILENO);
-	else if (signo == SIGQUIT)
-		ft_putendl_fd("Quit (core dumped)", STDERR_FILENO);
+	signal(SIGINT, readline_signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 static int	my_readline(const char *prompt, t_shell *shell)
 {
-	signal(SIGINT, readline_signal_handler);
-	signal(SIGQUIT, SIG_IGN);
+	set_readline_signal();
 	shell->line = readline(prompt);
 	if (shell->line == NULL)
 	{
@@ -42,8 +39,6 @@ static int	my_readline(const char *prompt, t_shell *shell)
 			ft_putendl_fd("exit", STDERR_FILENO);
 		return (FALSE);
 	}
-	signal(SIGINT, wait_exec_signal_handler);
-	signal(SIGQUIT, wait_exec_signal_handler);
 	shell->status = SHELL_LEXER;
 	return (TRUE);
 }
