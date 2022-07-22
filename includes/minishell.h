@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jubae <jubae@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 00:24:41 by jubae             #+#    #+#             */
-/*   Updated: 2022/07/19 09:21:21 by jubae            ###   ########.fr       */
+/*   Updated: 2022/07/22 23:50:21 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,8 @@ int		check_operator(enum e_token type);
 int		check_redir(enum e_token type);
 
 // parser/find_control_operator.c
-int		find_control_operator(t_list *tk_list, t_list **junc, enum e_ast *type);
+int		find_pipe(t_list *tk_list, t_list **junc, enum e_ast *type);
+int		find_and_or(t_list *tk_list, t_list **junc, enum e_ast *type);
 
 // parser/find_redir_operator.c
 int		find_redir_operator(t_list *tk_list, t_list **junc, enum e_ast *type);

@@ -6,7 +6,7 @@
 /*   By: younglee <younglee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 01:58:12 by younglee          #+#    #+#             */
-/*   Updated: 2022/07/19 17:24:50 by younglee         ###   ########seoul.kr  */
+/*   Updated: 2022/07/22 23:47:39 by younglee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ int	make_ast_node(t_list *token_list, t_ast *node)
 		return (SUCCESS);
 	if (check_wrapped(token_list) == TRUE)
 		return (make_ast_node(token_list->next, node));
-	if (find_control_operator(token_list, &junction, &node->type) == TRUE)
+	if (find_and_or(token_list, &junction, &node->type) == TRUE)
+		return (make_control_node(token_list, junction->next, node));
+	if (find_pipe(token_list, &junction, &node->type) == TRUE)
 		return (make_control_node(token_list, junction->next, node));
 	if (find_redir_operator(token_list, &junction, &node->type) == TRUE)
 		return (make_redir_node(token_list, junction->next, node));
